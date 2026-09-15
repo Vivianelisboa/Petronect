@@ -12,11 +12,6 @@ import { PaolaWidget } from "./PaolaWidget";
 const CANAL_ASSISTENTE = "assistente_portal";
 const ACAO_IGNORAR = "Agora não";
 
-/**
- * Visão do fornecedor: a Paola integrada ao Njila. O Njila fornece o
- * gatilho (momento da jornada); a Paola é a voz. Ações clicadas são
- * registradas para alimentar o painel operacional.
- */
 export function AssistentePage() {
   const { t } = useTranslation();
   const [empresaId, setEmpresaId] = useState("");
@@ -35,8 +30,8 @@ export function AssistentePage() {
   }
 
   return (
-    <section className="mx-auto max-w-xl p-6">
-      <div className="mb-4 flex items-center gap-2 rounded-lg border border-ink-200 bg-surface-50 px-3 py-2 text-xs text-ink-500">
+    <section className="mx-auto max-w-xl">
+      <div className="mb-4 flex items-center gap-2 rounded-lg border border-ink-200 bg-white px-3 py-2 text-xs text-ink-500">
         <MonitorPlay size={14} />
         {t("assistente.banner_demonstracao")}
       </div>

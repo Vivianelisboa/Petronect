@@ -20,7 +20,10 @@ const TOAST_POR_ACAO = {
   adiar: "fila.toast_adiado",
 };
 
-/** Página principal: quem precisa de atenção agora, ordenado por prioridade. */
+/** 
+ * Página da Fila — layout moderno com sidebar.
+ * Lista em linhas (estilo Linear/GitHub), não cards.
+ */
 export function FilaHojePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -90,12 +93,15 @@ export function FilaHojePage() {
   }
 
   return (
-    <section className="space-y-6 p-6">
-      <header className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-ink-900">{t("fila.titulo")}</h1>
-          <p className="mt-1 text-sm text-ink-500">{t("fila.subtitulo")}</p>
-        </div>
+    <section className="space-y-6">
+      {/* Stats hero + filtros */}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <ResumoFila
+          contagens={contagens}
+          total={comOverride.length}
+          ativo={segmento}
+          onSelecionar={setSegmento}
+        />
         <Select
           aria-label={t("fila.filtrar_por_momento")}
           value={momento}
@@ -109,27 +115,19 @@ export function FilaHojePage() {
             </option>
           ))}
         </Select>
-      </header>
-
-      {!erro && (fila.length > 0 || !carregando) && (
-        <ResumoFila
-          contagens={contagens}
-          total={comOverride.length}
-          ativo={segmento}
-          onSelecionar={setSegmento}
-        />
-      )}
+      </div>
 
       <Triagem valor={segmento} onSelecionar={setSegmento} />
 
+      {/* Lista em linhas */}
       {carregando ? (
-        <div className="space-y-3">
+        <div className="space-y-0 divide-y divide-ink-100">
           {[0, 1, 2].map((indice) => (
-            <CardCasoSkeleton key={indice} />
+            <RowSkeleton key={indice} />
           ))}
         </div>
       ) : erro ? (
-        <div className="rounded-xl border border-red-100 bg-red-50/60">
+        <div className="rounded-2xl bg-white shadow-sm">
           <EmptyState
             icon={ServerCrash}
             title={t("fila.erro_titulo")}
@@ -142,7 +140,7 @@ export function FilaHojePage() {
           />
         </div>
       ) : filtrada.length === 0 ? (
-        <div className="rounded-xl border border-ink-200 bg-surface-50">
+        <div className="rounded-2xl bg-white shadow-sm">
           <EmptyState
             icon={Trophy}
             title={t("fila.vazia_titulo")}
@@ -150,16 +148,18 @@ export function FilaHojePage() {
           />
         </div>
       ) : (
-        <div className="space-y-3">
-          {filtrada.map((item) => (
-            <CardCaso
-              key={item.empresa_id}
-              item={item}
-              saindo={saindo.includes(item.empresa_id)}
-              onVerFicha={(empresaId) => navigate(`/empresa/${empresaId}`)}
-              onAcao={handleAcao}
-            />
-          ))}
+        <div className="overflow-hidden rounded-xl border border-ink-200 bg-white shadow-sm">
+          <div className="divide-y divide-ink-100">
+            {filtrada.map((item) => (
+              <CardCaso
+                key={item.empresa_id}
+                item={item}
+                saindo={saindo.includes(item.empresa_id)}
+                onVerFicha={(empresaId) => navigate(`/empresa/${empresaId}`)}
+                onAcao={handleAcao}
+              />
+            ))}
+          </div>
         </div>
       )}
 
@@ -168,26 +168,15 @@ export function FilaHojePage() {
   );
 }
 
-function CardCasoSkeleton() {
+function RowSkeleton() {
   return (
-    <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-sm">
-      <div className="flex items-start gap-3.5">
-        <Skeleton className="h-11 w-11 rounded-xl" />
-        <div className="flex-1 space-y-2">
-          <Skeleton className="h-5 w-48" />
-          <Skeleton className="h-3 w-28" />
-          <div className="flex gap-2">
-            <Skeleton className="h-5 w-28 rounded-full" />
-            <Skeleton className="h-5 w-20 rounded-full" />
-          </div>
-        </div>
-        <Skeleton className="h-11 w-11 rounded-full" />
+    <div className="flex items-center gap-4 px-5 py-4">
+      <Skeleton className="h-10 w-10 rounded-lg" />
+      <div className="flex-1 space-y-2">
+        <Skeleton className="h-4 w-48" />
+        <Skeleton className="h-3 w-28" />
       </div>
-      <Skeleton className="mt-4 h-6 w-full" />
-      <div className="mt-3 flex items-center justify-between">
-        <Skeleton className="h-3 w-40" />
-        <Skeleton className="h-8 w-44 rounded-md" />
-      </div>
+      <Skeleton className="h-8 w-24 rounded-md" />
     </div>
   );
 }

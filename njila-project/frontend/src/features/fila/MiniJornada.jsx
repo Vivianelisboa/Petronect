@@ -13,9 +13,8 @@ const ICONES = {
 };
 
 /**
- * A jornada como trilha de jogo: nós com ícone, o atual maior e destacado.
- * Sem rótulos — o nome da etapa fica no `title` de cada nó (tooltip +
- * acessibilidade). Derivada do `momento`; sem etapa associada, não renderiza.
+ * Trilha da jornada ultra-compacta.
+ * Nós pequenos, conectores finos, sem texto — só o visual.
  */
 export function MiniJornada({ momento, className }) {
   const { t } = useTranslation();
@@ -36,8 +35,8 @@ export function MiniJornada({ momento, className }) {
             {indice > 0 && (
               <span
                 className={cn(
-                  "h-0.5 flex-1",
-                  indice <= atual ? "bg-brand-300" : "bg-ink-200"
+                  "h-[2px] flex-1",
+                  indice <= atual ? "bg-brand-400" : "bg-ink-100"
                 )}
               />
             )}
@@ -46,13 +45,13 @@ export function MiniJornada({ momento, className }) {
               className={cn(
                 "flex shrink-0 items-center justify-center rounded-full transition-all",
                 agora
-                  ? "h-8 w-8 bg-brand-600 text-white ring-4 ring-brand-100"
-                  : "h-6 w-6",
+                  ? "h-7 w-7 bg-brand-600 text-white shadow-sm"
+                  : "h-5 w-5",
                 passou && "bg-brand-500 text-white",
-                !passou && !agora && "border border-ink-200 bg-white text-ink-300"
+                !passou && !agora && "border-2 border-ink-200 bg-white text-ink-300"
               )}
             >
-              <Icone size={agora ? 15 : 12} />
+              <Icone size={agora ? 14 : 10} strokeWidth={2.5} />
             </span>
           </div>
         );

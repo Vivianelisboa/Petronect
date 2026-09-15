@@ -14,7 +14,6 @@ import { Spinner } from "../../design/ui/Spinner";
 import { Timeline } from "./Timeline";
 import { HistoricoAcoes } from "./HistoricoAcoes";
 
-/** Ficha completa de uma empresa: classificação, jornada e ações. */
 export function FichaEmpresaPage() {
   const { empresaId } = useParams();
   const { t } = useTranslation();
@@ -31,7 +30,7 @@ export function FichaEmpresaPage() {
 
   if (carregando) {
     return (
-      <div className="p-6">
+      <div className="py-6">
         <Spinner label={t("comum.carregando")} />
       </div>
     );
@@ -39,7 +38,7 @@ export function FichaEmpresaPage() {
 
   if (!empresa) {
     return (
-      <div className="p-6">
+      <div className="py-6">
         <EmptyState icon={UserX} title={t("ficha.nao_encontrada")} />
       </div>
     );
@@ -49,10 +48,10 @@ export function FichaEmpresaPage() {
   const momento = classificacao ? getMomento(classificacao.momento) : null;
 
   return (
-    <section className="mx-auto max-w-3xl p-6">
+    <section className="mx-auto max-w-3xl">
       <Link
         to="/"
-        className="mb-4 inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-800"
+        className="mb-6 inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-800"
       >
         <ArrowLeft size={14} />
         {t("ficha.voltar")}
@@ -60,7 +59,7 @@ export function FichaEmpresaPage() {
 
       <header className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-ink-900">{empresa.nome_empresa}</h1>
+          <h1 className="text-2xl font-bold text-ink-900">{empresa.nome_empresa}</h1>
           <p className="mt-1 text-sm text-ink-500">
             {empresa.cnpj_mascarado} · {empresa.segmento}
           </p>
@@ -74,7 +73,7 @@ export function FichaEmpresaPage() {
       </header>
 
       {classificacao && (
-        <p className="mt-4 rounded-lg bg-surface-50 p-4 text-sm text-ink-800 leading-relaxed">
+        <p className="mt-6 rounded-xl bg-surface-50 p-5 text-sm text-ink-800 leading-relaxed">
           {classificacao.score_explicacao}
         </p>
       )}

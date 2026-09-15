@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Headset, HelpCircle, SendHorizontal } from "lucide-react";
 import { Badge } from "../../design/ui/Badge";
@@ -8,15 +7,9 @@ import { Input } from "../../design/ui/Input";
 import { enviarMensagemChat } from "../../services/endpoints";
 import { getMomento } from "../../domain/momentos";
 
-/** Rótulos que o motor do backend emite para handoff e dispensa. */
 const ACAO_HANDOFF = "Falar com Atendimento";
 const ACAO_DISPENSAR = "Agora não";
 
-/**
- * Assistente virtual integrado ao Njila. Recebe o gatilho de jornada
- * e apresenta uma superfície única: mensagem proativa, conversa e
- * handoff para o Atendimento.
- */
 export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
   const { t } = useTranslation();
   const [emAtendimento, setEmAtendimento] = useState(false);
@@ -55,7 +48,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
 
   return (
     <Card className="overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-ink-100 px-4 py-3">
+      <div className="flex items-center gap-3 border-b border-ink-100 px-5 py-4">
         <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-brand-700">
           <Headset size={16} />
           <span
@@ -78,7 +71,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
         )}
       </div>
 
-      <div className="max-h-80 space-y-3 overflow-y-auto p-4">
+      <div className="max-h-80 space-y-3 overflow-y-auto p-5">
         {mensagens.map((mensagem, indice) => {
           if (mensagem.autor === "sistema") {
             return (
@@ -91,7 +84,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
           return (
             <div key={indice} className={meu ? "flex flex-col items-end" : "flex flex-col items-start"}>
               <div
-                className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
+                className={`max-w-[85%] rounded-xl px-4 py-2.5 text-sm ${
                   meu ? "bg-brand-700 text-white" : "bg-surface-100 text-ink-800"
                 }`}
               >
@@ -125,7 +118,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
               )}
 
               {mensagem.acoes && mostrarPorque && (
-                <p className="mt-1 rounded-md bg-surface-50 p-2 text-xs text-ink-500">
+                <p className="mt-1 rounded-lg bg-surface-50 p-3 text-xs text-ink-500">
                   {t("assistente.porque_explicacao")}{" "}
                   <strong>{momentoInfo?.i18nKey ? t(momentoInfo.i18nKey) : "—"}</strong>
                 </p>
@@ -135,7 +128,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
         })}
       </div>
 
-      <div className="flex items-center gap-2 border-t border-ink-100 p-3">
+      <div className="flex items-center gap-2 border-t border-ink-100 p-4">
         <Input
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
