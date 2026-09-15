@@ -2,6 +2,7 @@
   "app": {
     "titulo": "portal njila",
     "tagline": "o caminho do fornecedor",
+    "assinatura": "por Petronect",
     "audiencia": "Marketing & Atendimento"
   },
   "perfil": {
@@ -15,17 +16,54 @@
   },
   "central": {
     "saudacao": "Olá, {{nome}}.",
-    "descricao": "Aqui está o panorama da operação para você decidir o próximo movimento.",
+    "descricao": "Aqui está o panorama de fornecedores do Portal Petronect para você decidir o próximo movimento.",
     "data": "Dia da operação",
-    "buscar": "Buscar empresa, segmento ou ação"
+    "buscar": "Buscar empresa, segmento ou ação",
+    "resultados": "{{count}} resultado encontrado",
+    "resultados_plural": "{{count}} resultados encontrados",
+    "empresas": "{{count}} empresa na operação",
+    "empresas_plural": "{{count}} empresas na operação"
+  },
+  "analitico": {
+    "titulo": "Visão analítica",
+    "subtitulo": "Como os fornecedores estão usando o Portal Petronect no período selecionado.",
+    "erro": "Não foi possível carregar os indicadores.",
+    "periodos": {
+      "7": "7 dias",
+      "30": "30 dias",
+      "90": "90 dias"
+    },
+    "kpis": {
+      "empresas": "Empresas monitoradas",
+      "eventos": "Eventos no período",
+      "criticos": "Casos críticos",
+      "intervencoes": "Intervenções registradas"
+    },
+    "graficos": {
+      "eventos": "Eventos ao longo do tempo",
+      "eventos_desc": "Total de eventos por dia no período selecionado.",
+      "areas": "Uso por área do portal",
+      "areas_desc": "Eventos por área no período selecionado."
+    },
+    "momentos": {
+      "titulo": "Casos por momento",
+      "desc": "Distribuição atual das empresas monitoradas."
+    },
+    "recentes": {
+      "titulo": "Atividade recente",
+      "desc": "Últimos eventos registrados no portal."
+    }
   },
   "nav": {
     "menu": "Menu",
-    "fila": "Central de Operações",
-    "assistente": "Assistente"
+    "fila": "Central",
+    "analitico": "Analítico",
+    "assistente": "Assistente",
+    "portal": "Portal"
   },
   "comum": {
     "carregando": "Carregando...",
+    "registrando": "Registrando...",
     "ver_ficha": "Ver ficha",
     "tentar_de_novo": "Tentar de novo",
     "pagina_nao_encontrada": "Página não encontrada",
@@ -84,6 +122,7 @@
     "toast_resolvido": "Caso encerrado — {{empresa}}",
     "toast_adiado": "Caso adiado — {{empresa}}",
     "toast_acao": "Ação registrada — {{empresa}}",
+    "toast_erro": "Não foi possível registrar a ação. Tente novamente.",
     "ultimo_acesso": "Último acesso",
     "parado_ha_dias_one": "parado há {{count}} dia",
     "parado_ha_dias_other": "parado há {{count}} dias",
@@ -91,6 +130,10 @@
     "mais_acoes": "Mais ações",
     "vazia_titulo": "Fila concluída",
     "vazia_descricao": "Todas as empresas deste recorte foram atendidas — bom trabalho.",
+    "sem_resultado_titulo": "Nenhum resultado encontrado",
+    "sem_resultado_descricao": "Tente ajustar a busca ou remover algum filtro.",
+    "sem_data_titulo": "Nenhum snapshot para este dia",
+    "sem_data_descricao": "Ainda não há dados da operação registrados para a data selecionada.",
     "erro_titulo": "Não foi possível carregar a fila",
     "erro_descricao": "Verifique se o backend está rodando e tente de novo."
   },
@@ -98,10 +141,83 @@
     "voltar": "Central de Operações",
     "selecione": "Selecione uma empresa na Central de Operações.",
     "nao_encontrada": "Empresa não encontrada.",
+    "erro_titulo": "Não foi possível carregar a ficha",
+    "erro_descricao": "Verifique se o backend está rodando e tente de novo.",
+    "jornada": "Jornada do fornecedor",
+    "proximo_passo": "Próximo passo",
+    "acoes": "Ações",
+    "porque": "Por que esta prioridade",
+    "nao_informado": "Não informado",
+    "fatos": {
+      "ultimo_acesso": "Último acesso",
+      "dias_parado": "Tempo parado",
+      "oportunidades": "Oportunidades vistas",
+      "cadastro": "Cadastro no portal"
+    },
+    "fator_momento": "Momento da jornada",
+    "fator_tempo": "Tempo sem retorno",
+    "fator_repeticoes": "Visitas à oportunidade",
+    "fator_oportunidade": "Oportunidade relacionada",
+    "dias_parado_one": "{{count}} dia",
+    "dias_parado_other": "{{count}} dias",
     "linha_do_tempo": "Linha do tempo da jornada",
     "registro_acoes": "Registro de ações",
     "sem_eventos": "Nenhum evento registrado.",
-    "sem_acoes": "Nenhuma ação registrada ainda."
+    "sem_acoes": "Nenhuma ação registrada ainda.",
+    "ver_historico": "Ver linha do tempo completa ({{count}})",
+    "ver_menos": "Mostrar menos",
+    "confirmar_titulo": "Marcar como resolvido?",
+    "confirmar_texto": "O caso sai da fila e passa para Concluídas.",
+    "confirmar": "Marcar como resolvido",
+    "cancelar": "Cancelar",
+    "toast_acao": "{{acao}} registrada",
+    "toast_erro": "Não foi possível registrar a ação. Tente novamente.",
+    "envio_para": "Para",
+    "canal": "Canal",
+    "mensagem": "Mensagem",
+    "enviar": "Enviar",
+    "envio_aviso": "O texto enviado fica registrado no histórico da empresa."
+  },
+  "mensagem": {
+    "chegou_perdeu": "Olá! Vimos que sua empresa começou a explorar o Portal Petronect, mas não avançou. Podemos ajudar a dar os primeiros passos?",
+    "parou_cadastro": "Olá! O cadastro da sua empresa ficou pendente no Portal Petronect. Podemos orientar a conclusão?",
+    "quis_participar_travou": "Olá! Você demonstrou interesse em uma oportunidade, mas o processo não foi concluído. Podemos ajudar com a etapa pendente?",
+    "era_ativa_sumiu": "Olá! Sentimos sua falta no Portal Petronect. Existem oportunidades que podem interessar à sua empresa — podemos atualizar você?",
+    "oportunidade_quente": "Olá! Notamos seu interesse em uma oportunidade. Quer ajuda para avançar no processo?",
+    "jornada_concluida": "Olá! Obrigado por participar do Portal Petronect. Se precisar de algo, estamos à disposição."
+  },
+  "tutorial": {
+    "chegou_perdeu": "Olá! Preparamos um tutorial rápido com os primeiros passos no Portal Petronect.",
+    "parou_cadastro": "Olá! Segue o passo a passo para concluir o cadastro no Portal Petronect.",
+    "quis_participar_travou": "Olá! Preparamos um tutorial sobre a etapa pendente para participar da oportunidade.",
+    "era_ativa_sumiu": "Olá! Separamos um tutorial com as novidades do Portal Petronect para você retomar.",
+    "oportunidade_quente": "Olá! Segue um tutorial para ajudar a avançar na oportunidade.",
+    "jornada_concluida": "Olá! Segue um tutorial com os próximos recursos do Portal Petronect."
+  },
+  "evento": {
+    "acessou_pagina_inicial": "Acessou a página inicial",
+    "buscou_oportunidades": "Buscou oportunidades",
+    "iniciou_cadastro": "Iniciou o cadastro",
+    "abriu_oportunidade": "Abriu uma oportunidade",
+    "demonstrou_interesse": "Demonstrou interesse",
+    "iniciou_pagamento_taxa": "Iniciou o pagamento da taxa",
+    "retornou_portal": "Retornou ao portal",
+    "concluiu_acao": "Concluiu a ação"
+  },
+  "pagina": {
+    "pagina_inicial": "Página inicial",
+    "oportunidades": "Oportunidades",
+    "detalhe_oportunidade": "Detalhe da oportunidade",
+    "cadastro_fornecedor": "Cadastro do fornecedor",
+    "pagamento_taxa": "Pagamento da taxa",
+    "meus_processos": "Meus processos",
+    "tutorial": "Tutorial",
+    "suporte": "Suporte"
+  },
+  "canal": {
+    "email": "E-mail",
+    "assistente_portal": "Mensagem no Portal",
+    "telefone": "Ligação"
   },
   "assistente": {
     "banner_demonstracao": "Simulação — Paola no Portal do fornecedor",
@@ -122,5 +238,49 @@
     "chat_placeholder": "Digite sua dúvida...",
     "chat_placeholder_humano": "Fale com o atendente...",
     "chat_enviar": "Enviar"
+  },
+  "portal": {
+    "titulo": "Portal Petronect",
+    "tagline": "Conexões que movem negócios",
+    "admin": "Área administrativa",
+    "badge": "Plataforma de negócios Petrobras",
+    "hero_titulo": "Sua próxima oportunidade começa aqui.",
+    "hero_subtitulo": "Uma experiência mais simples, segura e inteligente para conectar empresas, processos e resultados.",
+    "ajudar": "Como podemos ajudar hoje?",
+    "personalizado_label": "Experiência personalizada",
+    "personalizado_titulo": "Um portal feito para o seu momento",
+    "personalizado_texto": "Selecione uma opção acima para receber um caminho mais direto.",
+    "personalizado_texto_ativo": "Acesse os recursos mais relevantes para sua rotina.",
+    "servicos_label": "Tudo em um só lugar",
+    "servicos_titulo": "Acesse o que você precisa",
+    "acessar": "Acessar",
+    "acao_padrao": "Conhecer o portal",
+    "rodape": "Portal Petronect · Protótipo demonstrativo",
+    "perfis": {
+      "fornecedor": {
+        "titulo": "Fornecedor",
+        "descricao": "Já sou cadastrado",
+        "destaque": "Oportunidades para sua empresa",
+        "acao": "Explorar cotações"
+      },
+      "cliente": {
+        "titulo": "Cliente",
+        "descricao": "Acompanho pedidos",
+        "destaque": "Sua operação, sempre à vista",
+        "acao": "Acompanhar pedidos"
+      },
+      "novo": {
+        "titulo": "Novo por aqui",
+        "descricao": "Quero me cadastrar",
+        "destaque": "Comece sua jornada",
+        "acao": "Iniciar cadastro"
+      }
+    },
+    "servicos": {
+      "cotacoes": { "titulo": "Cotações eletrônicas", "texto": "Encontre oportunidades e envie propostas." },
+      "cadastro": { "titulo": "Cadastro da empresa", "texto": "Mantenha seus dados sempre atualizados." },
+      "contratos": { "titulo": "Contratos e pedidos", "texto": "Acompanhe cada etapa com clareza." },
+      "pagamentos": { "titulo": "Pagamentos", "texto": "Consulte títulos e comprovantes em um lugar." }
+    }
   }
 }

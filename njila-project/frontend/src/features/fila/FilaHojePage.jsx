@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ServerCrash, Trophy } from "lucide-react";
+import { Filter, ServerCrash, Trophy } from "lucide-react";
 import { useFilaHoje } from "../../hooks/useFilaHoje";
 import { registrarAcao } from "../../services/endpoints";
 import { ACOES, CANAL_PADRAO, SITUACAO_POR_ACAO } from "../../domain/acoes";
+import { ACOES_COM_MENSAGEM, modeloDeMensagem } from "../../domain/mensagens";
 import { MOMENTOS_FILTRAVEIS, getMomento } from "../../domain/momentos";
 import { Button } from "../../design/ui/Button";
 import { EmptyState } from "../../design/ui/EmptyState";
@@ -12,6 +13,7 @@ import { Select } from "../../design/ui/Select";
 import { SearchField } from "../../design/ui/SearchField";
 import { Skeleton } from "../../design/ui/Skeleton";
 import { ToastStack } from "../../design/ui/ToastStack";
+import { ComposerMensagem } from "../../components/ComposerMensagem";
 import { CardCaso } from "./CardCaso";
 import { ResumoFila } from "./ResumoFila";
 
@@ -33,6 +35,8 @@ export function FilaHojePage() {
   const [overrides, setOverrides] = useState({});
   const [saindo, setSaindo] = useState([]);
   const [toasts, setToasts] = useState([]);
+  const [acaoEmAndamento, setAcaoEmAndamento] = useState("");
+  const [composer, setComposer] = useState(null);
 
   const { fila, carregando, erro, recarregar } = useFilaHoje({
     momento: momento || undefined,
@@ -56,7 +60,7 @@ export function FilaHojePage() {
     const correspondeBusca = !termo || [
       item.nome_empresa,
       item.segmento,
-      item.momento,
+      t(getMomento(item.momento).i18nKey),
       item.acao_recomendada,
     ].some((valor) => String(valor || "").toLocaleLowerCase().includes(termo));
 
@@ -72,7 +76,9 @@ export function FilaHojePage() {
     setTimeout(() => setToasts((atual) => atual.filter((toast) => toast.id !== id)), 3200);
   }
 
-  async function handleAcao(empresaId, tipoAcao, nomeEmpresa) {
+  async function executarAcao(empresaId, tipoAcao, nomeEmpresa, mensagem, canal) {
+    if (acaoEmAndamento) return;
+
     const novaSituacao = SITUACAO_POR_ACAO[tipoAcao];
     const chaveToast = TOAST_POR_ACAO[tipoAcao] || "fila.toast_acao";
     dispararToast(t(chaveToast, { empresa: nomeEmpresa }));
@@ -90,14 +96,26 @@ export function FilaHojePage() {
       setOverrides((atual) => ({ ...atual, [empresaId]: novaSituacao }));
     }
 
+    setAcaoEmAndamento(empresaId);
+
     try {
       await registrarAcao(empresaId, {
         tipo_acao: tipoAcao,
-        canal: CANAL_PADRAO,
-        mensagem_enviada: t(ACOES[tipoAcao]),
+        canal: canal || CANAL_PADRAO,
+        mensagem_enviada: mensagem || t(ACOES[tipoAcao]),
       });
+      setComposer(null);
       await recarregar({ silencioso: true });
+    } catch {
+      dispararToast(t("fila.toast_erro"));
+      setSaindo((atual) => atual.filter((id) => id !== empresaId));
+      setOverrides((atual) => {
+        const proximo = { ...atual };
+        delete proximo[empresaId];
+        return proximo;
+      });
     } finally {
+      setAcaoEmAndamento("");
       setOverrides((atual) => {
         const proximo = { ...atual };
         delete proximo[empresaId];
@@ -105,6 +123,19 @@ export function FilaHojePage() {
       });
     }
   }
+
+  function abrirAcao(empresaId, tipoAcao, nomeEmpresa) {
+    if (ACOES_COM_MENSAGEM.includes(tipoAcao)) {
+      const item = comOverride.find((registro) => registro.empresa_id === empresaId);
+      const chave = modeloDeMensagem(tipoAcao, item?.momento);
+      setComposer({ empresaId, tipoAcao, nomeEmpresa, texto: chave ? t(chave) : "" });
+      return;
+    }
+    executarAcao(empresaId, tipoAcao, nomeEmpresa);
+  }
+
+  const recorteVazio = busca.trim() || momento || segmento !== "todos";
+  const dataSemSnapshot = dataReferencia !== dataHoje() && fila.length === 0;
 
   return (
     <section className="space-y-6">
@@ -139,28 +170,36 @@ export function FilaHojePage() {
           <span className="text-xs font-semibold uppercase tracking-wider text-ink-400">
             {t("fila.filtrar_por_momento")}
           </span>
-          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
             <SearchField
               value={busca}
               onChange={setBusca}
               placeholder={t("central.buscar")}
-              className="w-full sm:w-64"
+              className="w-full sm:w-72"
             />
-            <Select
-              aria-label={t("fila.filtrar_por_momento")}
-              value={momento}
-              onChange={(e) => setMomento(e.target.value)}
-              className="w-full sm:w-64"
-            >
-              <option value="">{t("fila.todos_momentos")}</option>
-              {MOMENTOS_FILTRAVEIS.map((momentoId) => (
-                <option key={momentoId} value={momentoId}>
-                  {t(getMomento(momentoId).i18nKey)}
-                </option>
-              ))}
-            </Select>
+            <div className="relative w-full sm:w-60">
+              <Filter size={15} className="pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-ink-400" />
+              <Select
+                aria-label={t("fila.filtrar_por_momento")}
+                value={momento}
+                onChange={(e) => setMomento(e.target.value)}
+                className="w-full pl-9"
+              >
+                <option value="">{t("fila.todos_momentos")}</option>
+                {MOMENTOS_FILTRAVEIS.map((momentoId) => (
+                  <option key={momentoId} value={momentoId}>
+                    {t(getMomento(momentoId).i18nKey)}
+                  </option>
+                ))}
+              </Select>
+            </div>
           </div>
         </div>
+        <p className="text-xs text-ink-400">
+          {busca.trim()
+            ? t("central.resultados", { count: filtrada.length })
+            : t("central.empresas", { count: comOverride.length })}
+        </p>
       </div>
 
       {/* Cards de operação */}
@@ -187,8 +226,20 @@ export function FilaHojePage() {
         <div className="rounded-2xl bg-white shadow-sm">
           <EmptyState
             icon={Trophy}
-            title={t("fila.vazia_titulo")}
-            description={t("fila.vazia_descricao")}
+            title={
+              dataSemSnapshot
+                ? t("fila.sem_data_titulo")
+                : recorteVazio
+                  ? t("fila.sem_resultado_titulo")
+                  : t("fila.vazia_titulo")
+            }
+            description={
+              dataSemSnapshot
+                ? t("fila.sem_data_descricao")
+                : recorteVazio
+                  ? t("fila.sem_resultado_descricao")
+                  : t("fila.vazia_descricao")
+            }
           />
         </div>
       ) : (
@@ -198,11 +249,23 @@ export function FilaHojePage() {
               key={item.empresa_id}
               item={item}
               saindo={saindo.includes(item.empresa_id)}
+              acaoEmAndamento={acaoEmAndamento === item.empresa_id}
               onVerFicha={(empresaId) => navigate(`/empresa/${empresaId}`)}
-              onAcao={handleAcao}
+              onAcao={abrirAcao}
             />
           ))}
         </div>
+      )}
+
+      {composer && (
+        <ComposerMensagem
+          empresa={composer.nomeEmpresa}
+          tipoAcao={composer.tipoAcao}
+          textoInicial={composer.texto}
+          processando={acaoEmAndamento === composer.empresaId}
+          onCancelar={() => setComposer(null)}
+          onEnviar={(texto, canal) => executarAcao(composer.empresaId, composer.tipoAcao, composer.nomeEmpresa, texto, canal)}
+        />
       )}
 
       <ToastStack toasts={toasts} />
@@ -220,13 +283,23 @@ function dataHoje() {
 
 function RowSkeleton() {
   return (
-    <div className="flex items-center gap-4 px-5 py-4">
-      <Skeleton className="h-10 w-10 rounded-lg" />
-      <div className="flex-1 space-y-2">
-        <Skeleton className="h-4 w-48" />
-        <Skeleton className="h-3 w-28" />
+    <div className="min-h-[252px] rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-100">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <Skeleton className="h-14 w-14 rounded-2xl" />
+          <div className="space-y-2 pt-1">
+            <Skeleton className="h-4 w-36" />
+            <Skeleton className="h-3 w-28" />
+            <Skeleton className="h-5 w-32 rounded-full" />
+          </div>
+        </div>
+        <Skeleton className="h-12 w-12 rounded-full" />
       </div>
-      <Skeleton className="h-8 w-24 rounded-md" />
+      <Skeleton className="mt-5 h-20 w-full rounded-xl" />
+      <div className="mt-4 flex justify-between">
+        <Skeleton className="h-3 w-24" />
+        <Skeleton className="h-8 w-28 rounded-lg" />
+      </div>
     </div>
   );
 }

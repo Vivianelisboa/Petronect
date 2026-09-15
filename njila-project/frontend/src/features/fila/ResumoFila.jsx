@@ -54,7 +54,7 @@ export function ResumoFila({ contagens, total, ativo, onSelecionar }) {
             >
               <Icone size={17} className={selecionada ? "text-brand-700" : tom} strokeWidth={2.2} />
               <span className="min-w-0">
-                <span className={cn("block text-lg font-bold tabular-nums leading-none", selecionada ? "text-brand-800" : tom)}>
+                <span className={cn("font-display block text-xl font-normal tabular-nums leading-none", selecionada ? "text-brand-800" : tom)}>
                   {valorDaVisao(visao.id)}
                 </span>
                 <span className={cn("mt-1 block truncate text-[10px] font-bold uppercase tracking-wider", selecionada ? "text-brand-700" : "text-ink-400")}>
@@ -76,7 +76,7 @@ export function ResumoFila({ contagens, total, ativo, onSelecionar }) {
             style={{ width: `${percentual}%` }}
           />
         </div>
-        <span className="shrink-0 text-xs font-bold tabular-nums text-ink-700">
+        <span className="font-display shrink-0 text-sm font-normal tabular-nums text-ink-700">
           {concluidas}/{total}
         </span>
       </div>

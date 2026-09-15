@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowUpRight, Info, MoreHorizontal, X } from "lucide-react";
 import { Badge } from "../../design/ui/Badge";
@@ -18,7 +18,7 @@ import { MiniJornada } from "./MiniJornada";
  * Card-caso: uma unidade de decisão com linguagem de missão,
  * mas hierarquia e ações próprias de um produto corporativo.
  */
-export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
+export function CardCaso({ item, saindo = false, acaoEmAndamento = false, onVerFicha, onAcao }) {
   const { t } = useTranslation();
   const [menuAberto, setMenuAberto] = useState(false);
   const [previewAberto, setPreviewAberto] = useState(false);
@@ -49,7 +49,7 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
             className="h-14 w-14 rounded-2xl"
           />
           <div className="min-w-0 pt-0.5">
-            <h3 className="truncate text-base font-bold tracking-tight text-ink-900">{item.nome_empresa}</h3>
+            <h3 className="font-display truncate text-lg font-normal tracking-[-0.02em] text-ink-900">{item.nome_empresa}</h3>
             <p className="mt-1 truncate text-xs text-ink-500">{item.segmento}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               <Badge variant={momento.variante}>{t(momento.i18nKey)}</Badge>
@@ -81,8 +81,7 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
         <MiniJornada momento={item.momento} />
       </div>
 
-      <div className="mt-3 flex items-center justify-between">
-        <span className="text-[11px] text-ink-400">Prioridade calculada pela jornada</span>
+      <div className="mt-3 flex items-center justify-end">
         <span className="text-[11px] text-ink-400">{item.dias_parado}d sem retorno</span>
       </div>
 
@@ -94,11 +93,16 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
 
         <div className="flex shrink-0 items-center gap-1.5">
           {primaria && (
-            <Button size="sm" onClick={() => onAcao(item.empresa_id, primaria, item.nome_empresa)}>
-              {t(ACOES[primaria])}
+            <Button disabled={acaoEmAndamento} size="sm" onClick={() => onAcao(item.empresa_id, primaria, item.nome_empresa)}>
+              {acaoEmAndamento ? t("comum.registrando") : t(ACOES[primaria])}
             </Button>
           )}
-          <Button variant="ghost" size="sm" onClick={() => setPreviewAberto(true)}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="font-display font-normal"
+            onClick={() => setPreviewAberto(true)}
+          >
             Ver detalhes
           </Button>
 
@@ -106,6 +110,7 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
             <Button
               variant="ghost"
               size="sm"
+              disabled={acaoEmAndamento}
               aria-label={t("fila.mais_acoes")}
               aria-expanded={menuAberto}
               onClick={() => setMenuAberto((aberto) => !aberto)}
@@ -156,8 +161,23 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
 }
 
 function EmpresaPreview({ item, momento, situacao, primaria, onClose, onVerFicha, onAcao, t }) {
+  const closeRef = useRef(null);
+
+  useEffect(() => {
+    closeRef.current?.focus();
+    function handleKeyDown(event) {
+      if (event.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-ink-950/35 p-4 backdrop-blur-[2px]" role="presentation">
+    <div
+      className="fixed inset-0 z-40 flex items-center justify-center bg-ink-950/35 p-4 backdrop-blur-[2px]"
+      role="presentation"
+      onMouseDown={(event) => event.target === event.currentTarget && onClose()}
+    >
       <div
         role="dialog"
         aria-modal="true"
@@ -176,6 +196,7 @@ function EmpresaPreview({ item, momento, situacao, primaria, onClose, onVerFicha
             type="button"
             aria-label="Fechar prévia"
             onClick={onClose}
+            ref={closeRef}
             className="flex h-9 w-9 items-center justify-center rounded-lg text-ink-400 transition-colors hover:bg-surface-50 hover:text-ink-800"
           >
             <X size={18} />
@@ -209,7 +230,7 @@ function EmpresaPreview({ item, momento, situacao, primaria, onClose, onVerFicha
         </div>
 
         <div className="mt-6 flex flex-wrap justify-end gap-2 border-t border-ink-100 pt-4">
-          <Button variant="ghost" size="sm" onClick={onVerFicha}>
+          <Button variant="ghost" size="sm" className="font-display font-normal" onClick={onVerFicha}>
             Abrir ficha completa <ArrowUpRight size={14} />
           </Button>
           {primaria && (
