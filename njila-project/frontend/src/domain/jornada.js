@@ -21,8 +21,9 @@ const ETAPA_POR_MOMENTO = {
   oportunidade_quente: "abriu",
   parou_cadastro: "cadastro",
   quis_participar_travou: "taxa",
+  // A empresa já demonstrou engajamento; o último ponto observável é a abertura.
+  era_ativa_sumiu: "abriu",
   jornada_concluida: "concluiu",
-  // era_ativa_sumiu: a etapa é desconhecida — sem trilha.
 };
 
 export function etapaAtual(momento) {
