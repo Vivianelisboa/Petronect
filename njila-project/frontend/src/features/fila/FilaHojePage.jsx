@@ -100,7 +100,7 @@ export function FilaHojePage() {
       <header className="flex flex-wrap items-end justify-between gap-5">
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-brand-700">Central de Operações</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-ink-900">
+          <h1 className="font-display mt-2 text-3xl font-normal tracking-[-0.035em] text-ink-900">
             {t("central.saudacao", { nome: t("perfil.nome").split(" ")[0] })}
           </h1>
           <p className="mt-1 text-sm text-ink-500">{t("central.descricao")}</p>
