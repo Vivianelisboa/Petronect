@@ -15,8 +15,8 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-8">
           <div className="flex items-center gap-3" aria-label="portal njila">
             <NjilaMark />
-            <span className="font-display text-2xl font-bold tracking-tight text-ink-900">
-              portal <span className="text-brand-600">njila</span>
+            <span className="text-2xl font-semibold tracking-[-0.03em] text-ink-900">
+              portal <span className="font-display font-normal text-brand-600">njila</span>
             </span>
           </div>
           <nav className="hidden items-center gap-1 sm:flex" aria-label={t("nav.menu")}>
