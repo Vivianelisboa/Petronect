@@ -9,6 +9,7 @@ import { Tooltip } from "../../design/ui/Tooltip";
 import { cn } from "../../lib/cn";
 import { getMomento } from "../../domain/momentos";
 import { getSituacao } from "../../domain/situacao";
+import { ETAPAS, etapaAtual } from "../../domain/jornada";
 import { ACOES, ACOES_FILA, acaoPrimaria } from "../../domain/acoes";
 import { iconeDoMomento } from "./iconesMomento";
 import { MiniJornada } from "./MiniJornada";
@@ -25,6 +26,8 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
   const momento = getMomento(item.momento);
   const situacao = getSituacao(item.situacao);
   const primaria = acaoPrimaria(item.momento);
+  const etapaId = etapaAtual(item.momento);
+  const etapa = ETAPAS.find((itemEtapa) => itemEtapa.id === etapaId);
   const detalhes = `${t("fila.ultimo_acesso")}: ${item.ultimo_acesso} · ${t("fila.parado_ha_dias", { count: item.dias_parado })}`;
 
   return (
@@ -32,7 +35,7 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
       <article
         title={detalhes}
         className={cn(
-        "group flex min-h-[278px] flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-100/80 transition-all duration-200",
+        "group flex min-h-[252px] flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-100/80 transition-all duration-200",
         "hover:-translate-y-0.5 hover:shadow-lg hover:ring-ink-200",
         saindo && "scale-[0.98] opacity-0"
         )}
@@ -54,24 +57,32 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
             </div>
           </div>
         </div>
-        <PriorityRing score={item.score} size={52} />
+        <div className="flex shrink-0 items-center gap-2">
+          {item.score_explicacao && (
+            <Tooltip label={item.score_explicacao}>
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700">
+                <Info size={14} />
+              </span>
+            </Tooltip>
+          )}
+          <PriorityRing score={item.score} size={52} />
+        </div>
       </div>
 
-      <div className="mt-5 rounded-xl bg-surface-50 px-3 py-3">
-        <div className="mb-2 flex items-center justify-between">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Jornada</span>
+      <div className="mt-5 rounded-xl bg-surface-50 px-4 py-3.5">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Jornada do fornecedor</span>
+          {etapa && (
+            <span className="truncate text-[11px] font-semibold text-brand-700">
+              {t(etapa.i18nKey)}
+            </span>
+          )}
         </div>
         <MiniJornada momento={item.momento} />
       </div>
 
       <div className="mt-3 flex items-center justify-between">
-        {item.score_explicacao ? (
-          <Tooltip label={item.score_explicacao}>
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700">
-              <Info size={14} />
-            </span>
-          </Tooltip>
-        ) : <span />}
+        <span className="text-[11px] text-ink-400">Prioridade calculada pela jornada</span>
         <span className="text-[11px] text-ink-400">{item.dias_parado}d sem retorno</span>
       </div>
 
