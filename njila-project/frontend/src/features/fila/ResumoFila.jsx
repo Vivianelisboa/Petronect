@@ -49,16 +49,16 @@ export function ResumoFila({ contagens, total, ativo, onSelecionar }) {
               aria-pressed={selecionada}
               className={cn(
                 "flex min-w-[104px] flex-1 items-center gap-2 rounded-xl px-3 py-3 text-left transition-all",
-                selecionada ? "bg-ink-900 text-white shadow-sm" : "hover:bg-surface-50"
+                selecionada ? "bg-brand-50 text-brand-900 ring-1 ring-brand-200" : "hover:bg-surface-50"
               )}
             >
-              <Icone size={17} className={selecionada ? "text-brand-300" : tom} strokeWidth={2.2} />
+              <Icone size={17} className={selecionada ? "text-brand-700" : tom} strokeWidth={2.2} />
               <span className="min-w-0">
-                <span className={cn("block text-lg font-bold tabular-nums leading-none", selecionada ? "text-white" : tom)}>
+                <span className={cn("block text-lg font-bold tabular-nums leading-none", selecionada ? "text-brand-800" : tom)}>
                   {valorDaVisao(visao.id)}
                 </span>
-                <span className={cn("mt-1 block truncate text-[10px] font-bold uppercase tracking-wider", selecionada ? "text-white/65" : "text-ink-400")}>
-                  {visao.id === "pendente" ? t("fila.resumo.pendente") : visao.label}
+                <span className={cn("mt-1 block truncate text-[10px] font-bold uppercase tracking-wider", selecionada ? "text-brand-700" : "text-ink-400")}>
+                  {visao.label}
                 </span>
               </span>
             </button>

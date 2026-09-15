@@ -94,26 +94,31 @@ export function FilaHojePage() {
   return (
     <section className="space-y-6">
       {/* Stats hero + filtros */}
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <div className="space-y-4">
         <ResumoFila
           contagens={contagens}
           total={comOverride.length}
           ativo={segmento}
           onSelecionar={setSegmento}
         />
-        <Select
-          aria-label={t("fila.filtrar_por_momento")}
-          value={momento}
-          onChange={(e) => setMomento(e.target.value)}
-          className="w-56"
-        >
-          <option value="">{t("fila.todos_momentos")}</option>
-          {MOMENTOS_FILTRAVEIS.map((momentoId) => (
-            <option key={momentoId} value={momentoId}>
-              {t(getMomento(momentoId).i18nKey)}
-            </option>
-          ))}
-        </Select>
+        <div className="flex items-center justify-between gap-4">
+          <span className="text-xs font-semibold uppercase tracking-wider text-ink-400">
+            {t("fila.filtrar_por_momento")}
+          </span>
+          <Select
+            aria-label={t("fila.filtrar_por_momento")}
+            value={momento}
+            onChange={(e) => setMomento(e.target.value)}
+            className="w-full max-w-xs"
+          >
+            <option value="">{t("fila.todos_momentos")}</option>
+            {MOMENTOS_FILTRAVEIS.map((momentoId) => (
+              <option key={momentoId} value={momentoId}>
+                {t(getMomento(momentoId).i18nKey)}
+              </option>
+            ))}
+          </Select>
+        </div>
       </div>
 
       {/* Cards de operação */}
