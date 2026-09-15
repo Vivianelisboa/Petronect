@@ -1,0 +1,30 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+build/
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Python (gerador de banco)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Serverless
+.serverless/

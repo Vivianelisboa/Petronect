@@ -1,21 +1,63 @@
 {
-  "app_title": "Njila — Painel Petronect",
-  "tab_fila": "Fila de Hoje",
-  "tab_ficha": "Ficha da Empresa",
-  "tab_assistente": "Assistente (visão do fornecedor)",
-  "fila_titulo": "Empresas que precisam de atenção",
-  "coluna_empresa": "Empresa",
-  "coluna_momento": "Momento",
-  "coluna_score": "Score",
-  "coluna_ultimo_acesso": "Último acesso",
-  "coluna_acao": "Ação recomendada",
-  "acao_ver_ficha": "Ver ficha",
-  "acao_enviar_mensagem": "Enviar mensagem",
-  "acao_enviar_tutorial": "Enviar tutorial",
-  "acao_encaminhar_atendimento": "Encaminhar ao Atendimento",
-  "acao_marcar_resolvido": "Marcar como resolvido",
-  "chat_placeholder": "Digite sua dúvida...",
-  "chat_enviar": "Enviar",
-  "carregando": "Carregando...",
-  "sem_pendencias": "Nenhuma pendência no momento — jornada concluída."
+  "app": {
+    "titulo": "Njila — Painel Petronect"
+  },
+  "nav": {
+    "fila": "Fila de Hoje",
+    "ficha": "Ficha da Empresa",
+    "assistente": "Assistente"
+  },
+  "comum": {
+    "carregando": "Carregando...",
+    "ver_ficha": "Ver ficha",
+    "pagina_nao_encontrada": "Página não encontrada",
+    "voltar_para_fila": "Volte para a Fila de Hoje pelo menu acima."
+  },
+  "momento": {
+    "chegou_perdeu": "Chegou e se perdeu",
+    "parou_cadastro": "Parou no cadastro",
+    "quis_participar_travou": "Quis participar e travou",
+    "era_ativa_sumiu": "Era ativa e sumiu",
+    "oportunidade_quente": "Oportunidade quente",
+    "jornada_concluida": "Jornada concluída"
+  },
+  "acao": {
+    "enviar_mensagem": "Enviar mensagem",
+    "enviar_tutorial": "Enviar tutorial",
+    "encaminhar_atendimento": "Encaminhar ao Atendimento",
+    "marcar_resolvido": "Marcar como resolvido"
+  },
+  "fila": {
+    "titulo": "Empresas que precisam de atenção",
+    "filtrar_por_momento": "Filtrar por momento",
+    "todos_momentos": "Todos os momentos",
+    "coluna_empresa": "Empresa",
+    "coluna_momento": "Momento",
+    "coluna_score": "Score",
+    "coluna_acao": "Ação recomendada",
+    "enviar_tutorial": "Enviar tutorial",
+    "mensagem_tutorial_automatico": "Tutorial enviado automaticamente.",
+    "vazia_titulo": "Nada por aqui",
+    "vazia_descricao": "Nenhuma empresa pendente neste filtro."
+  },
+  "ficha": {
+    "voltar": "Voltar para a Fila",
+    "selecione": "Selecione uma empresa na Fila de Hoje.",
+    "nao_encontrada": "Empresa não encontrada.",
+    "linha_do_tempo": "Linha do tempo da jornada",
+    "registro_acoes": "Registro de ações",
+    "sem_eventos": "Nenhum evento registrado.",
+    "sem_acoes": "Nenhuma ação registrada ainda."
+  },
+  "assistente": {
+    "selecionar_empresa": "Simular login de qual empresa? (visão do fornecedor no Portal)",
+    "selecione": "Selecione uma empresa...",
+    "selecione_titulo": "Escolha uma empresa",
+    "selecione_descricao": "Selecione acima para ver o card que o fornecedor receberia no Portal.",
+    "sem_alerta": "Nenhum alerta no momento — jornada concluída para esta empresa.",
+    "chat_titulo": "Converse com o Assistente",
+    "chat_vazio": "Faça uma pergunta para começar.",
+    "chat_placeholder": "Digite sua dúvida...",
+    "chat_enviar": "Enviar"
+  }
 }
