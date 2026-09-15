@@ -64,7 +64,6 @@ export function FilaHojePage() {
       segmento !== "todos" && segmento !== "criticos" && novaSituacao !== segmento;
 
     if (mudaDeSegmento) {
-      // O card sai da vista com transição antes de mudar de situação.
       setSaindo((atual) => [...atual, empresaId]);
       setTimeout(() => {
         setOverrides((atual) => ({ ...atual, [empresaId]: novaSituacao }));
@@ -91,11 +90,11 @@ export function FilaHojePage() {
   }
 
   return (
-    <section className="mx-auto max-w-5xl space-y-5 p-6">
+    <section className="space-y-6 p-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold text-ink-900">{t("fila.titulo")}</h2>
-          <p className="text-sm text-ink-500">{t("fila.subtitulo")}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-ink-900">{t("fila.titulo")}</h1>
+          <p className="mt-1 text-sm text-ink-500">{t("fila.subtitulo")}</p>
         </div>
         <Select
           aria-label={t("fila.filtrar_por_momento")}
@@ -130,7 +129,7 @@ export function FilaHojePage() {
           ))}
         </div>
       ) : erro ? (
-        <div className="rounded-2xl border border-red-100 bg-red-50/60">
+        <div className="rounded-xl border border-red-100 bg-red-50/60">
           <EmptyState
             icon={ServerCrash}
             title={t("fila.erro_titulo")}
@@ -143,7 +142,7 @@ export function FilaHojePage() {
           />
         </div>
       ) : filtrada.length === 0 ? (
-        <div className="rounded-2xl border border-cream-600/50 bg-cream-400">
+        <div className="rounded-xl border border-ink-200 bg-surface-50">
           <EmptyState
             icon={Trophy}
             title={t("fila.vazia_titulo")}
@@ -171,7 +170,7 @@ export function FilaHojePage() {
 
 function CardCasoSkeleton() {
   return (
-    <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-card">
+    <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-sm">
       <div className="flex items-start gap-3.5">
         <Skeleton className="h-11 w-11 rounded-xl" />
         <div className="flex-1 space-y-2">

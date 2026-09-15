@@ -37,7 +37,7 @@ export function MiniJornada({ momento, className }) {
               <span
                 className={cn(
                   "h-0.5 flex-1",
-                  indice <= atual ? "bg-leaf-300" : "bg-ink-200"
+                  indice <= atual ? "bg-brand-300" : "bg-ink-200"
                 )}
               />
             )}
@@ -46,9 +46,9 @@ export function MiniJornada({ momento, className }) {
               className={cn(
                 "flex shrink-0 items-center justify-center rounded-full transition-all",
                 agora
-                  ? "h-8 w-8 bg-leaf-600 text-white ring-4 ring-leaf-100"
+                  ? "h-8 w-8 bg-brand-600 text-white ring-4 ring-brand-100"
                   : "h-6 w-6",
-                passou && "bg-leaf-500 text-white",
+                passou && "bg-brand-500 text-white",
                 !passou && !agora && "border border-ink-200 bg-white text-ink-300"
               )}
             >

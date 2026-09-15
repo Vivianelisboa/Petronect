@@ -7,12 +7,12 @@ export default {
     extend: {
       colors: {
         brand: palette.brand,
-        leaf: palette.leaf,
-        cream: palette.cream,
         ink: palette.ink,
+        surface: palette.surface,
       },
       fontFamily: {
-        sans: ["Garet", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+        sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+        display: ["Garet", "Inter", "system-ui", "sans-serif"],
       },
       boxShadow: {
         card: shadows.card,

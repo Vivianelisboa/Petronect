@@ -5,11 +5,10 @@ import { Navigation } from "./Navigation";
 /** Moldura da aplicação: cabeçalho + navegação + conteúdo da rota. */
 export function AppShell() {
   return (
-    <div className="min-h-screen bg-cream-200">
-      <div className="h-[3px] bg-leaf-500" />
+    <div className="min-h-screen bg-white">
       <Header />
       <Navigation />
-      <main>
+      <main className="mx-auto max-w-6xl">
         <Outlet />
       </main>
     </div>

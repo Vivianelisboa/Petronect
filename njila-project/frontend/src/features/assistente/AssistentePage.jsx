@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Bot, MonitorPlay } from "lucide-react";
+import { MessageSquare, MonitorPlay } from "lucide-react";
 import { useFilaHoje } from "../../hooks/useFilaHoje";
 import { useAssistente } from "../../hooks/useAssistente";
 import { registrarAcao } from "../../services/endpoints";
@@ -13,9 +13,9 @@ const CANAL_ASSISTENTE = "assistente_portal";
 const ACAO_IGNORAR = "Agora não";
 
 /**
- * Simulação da visão do FORNECEDOR: a Paola integrada ao Njila. O Njila
- * fornece o gatilho (momento da jornada); a Paola é a voz. Ações clicadas
- * são registradas para alimentar o painel operacional.
+ * Visão do fornecedor: a Paola integrada ao Njila. O Njila fornece o
+ * gatilho (momento da jornada); a Paola é a voz. Ações clicadas são
+ * registradas para alimentar o painel operacional.
  */
 export function AssistentePage() {
   const { t } = useTranslation();
@@ -36,12 +36,12 @@ export function AssistentePage() {
 
   return (
     <section className="mx-auto max-w-xl p-6">
-      <div className="mb-4 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+      <div className="mb-4 flex items-center gap-2 rounded-lg border border-ink-200 bg-surface-50 px-3 py-2 text-xs text-ink-500">
         <MonitorPlay size={14} />
         {t("assistente.banner_demonstracao")}
       </div>
 
-      <label className="mb-1 block text-sm font-medium text-slate-600">
+      <label className="mb-1 block text-sm font-medium text-ink-600">
         {t("assistente.selecionar_empresa")}
       </label>
       <Select value={empresaId} onChange={(e) => setEmpresaId(e.target.value)} className="mb-4">
@@ -55,7 +55,7 @@ export function AssistentePage() {
 
       {!empresaId ? (
         <EmptyState
-          icon={Bot}
+          icon={MessageSquare}
           title={t("assistente.selecione_titulo")}
           description={t("assistente.selecione_descricao")}
         />

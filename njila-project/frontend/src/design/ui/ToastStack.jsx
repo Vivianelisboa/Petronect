@@ -14,7 +14,7 @@ export function ToastStack({ toasts }) {
           key={toast.id}
           className="flex items-center gap-2 rounded-lg bg-ink-900 px-4 py-2.5 text-sm text-white shadow-lg"
         >
-          <CheckCircle2 size={15} className="shrink-0 text-leaf-400" />
+          <CheckCircle2 size={15} className="shrink-0 text-brand-400" />
           {toast.texto}
         </div>
       ))}

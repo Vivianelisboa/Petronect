@@ -3,7 +3,7 @@ import { cn } from "../../lib/cn";
 const VARIANTES = {
   neutral: "bg-slate-100 text-slate-600",
   info: "bg-sky-100 text-sky-700",
-  success: "bg-leaf-100 text-leaf-700",
+  success: "bg-brand-100 text-brand-700",
   warning: "bg-amber-100 text-amber-700",
   danger: "bg-red-100 text-red-600",
   accent: "bg-pink-100 text-pink-700",

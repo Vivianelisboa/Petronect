@@ -1,10 +1,10 @@
 import { cn } from "../../lib/cn";
 
-/** Superfície elevada padrão (borda + sombra suave). */
+/** Superfície elevada padrão com borda sutil e sombra discreta. */
 export function Card({ className, ...props }) {
   return (
     <div
-      className={cn("rounded-xl border border-slate-200 bg-white shadow-card", className)}
+      className={cn("rounded-xl border border-ink-200 bg-white shadow-sm", className)}
       {...props}
     />
   );
@@ -14,7 +14,7 @@ export function Card({ className, ...props }) {
 export function CardHeader({ className, ...props }) {
   return (
     <div
-      className={cn("border-b border-slate-100 px-4 py-3 text-sm font-semibold text-ink-700", className)}
+      className={cn("border-b border-ink-100 px-4 py-3 text-sm font-semibold text-ink-800", className)}
       {...props}
     />
   );

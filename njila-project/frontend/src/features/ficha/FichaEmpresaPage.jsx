@@ -52,7 +52,7 @@ export function FichaEmpresaPage() {
     <section className="mx-auto max-w-3xl p-6">
       <Link
         to="/"
-        className="mb-4 inline-flex items-center gap-1 text-sm text-ink-600 hover:text-ink-800"
+        className="mb-4 inline-flex items-center gap-1 text-sm text-ink-500 hover:text-ink-800"
       >
         <ArrowLeft size={14} />
         {t("ficha.voltar")}
@@ -60,8 +60,8 @@ export function FichaEmpresaPage() {
 
       <header className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-ink-800">{empresa.nome_empresa}</h2>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-xl font-bold text-ink-900">{empresa.nome_empresa}</h1>
+          <p className="mt-1 text-sm text-ink-500">
             {empresa.cnpj_mascarado} · {empresa.segmento}
           </p>
         </div>
@@ -74,7 +74,7 @@ export function FichaEmpresaPage() {
       </header>
 
       {classificacao && (
-        <p className="mt-4 rounded-lg bg-ink-50 p-4 text-sm text-ink-800">
+        <p className="mt-4 rounded-lg bg-surface-50 p-4 text-sm text-ink-800 leading-relaxed">
           {classificacao.score_explicacao}
         </p>
       )}
@@ -93,7 +93,7 @@ export function FichaEmpresaPage() {
         </CardBody>
       </Card>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-6 flex flex-wrap gap-2">
         {ACOES_FICHA.map((tipoAcao) => (
           <Button key={tipoAcao} variant="secondary" onClick={() => handleAcao(tipoAcao)}>
             {t(ACOES[tipoAcao])}

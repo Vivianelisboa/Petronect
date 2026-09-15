@@ -22,28 +22,29 @@ const LEAF = {
 };
 
 /**
- * Cores da marca e da interface.
- * - `brand` (azul corporativo): ação — botões, navegação ativa, foco.
- * - `leaf` (verde #70bb44): jornada — trilha, progresso e estados positivos.
- * - `cream` (#f6efdf): fundo quente da página e blocos de destaque.
- * - `ink` (neutro): texto e superfícies brancas.
+ * Cores da marca Petronect e da interface Njila.
+ * - `brand` (verde #70bb44): cor primária da marca — CTAs, destaques, progresso.
+ * - `ink` (slate): texto, bordas e superfícies neutras.
+ * - `surface` (warm gray): fundos sutis para cards e seções.
+ * 
+ * Design principle: fundo branco como base, verde usado com disciplina
+ * como acento de marca, nunca como fundo principal.
  */
 export const palette = {
-  brand: colors.blue,
-  leaf: LEAF,
-  cream: {
-    50: "#fffefd",
-    100: "#fefdfb",
-    200: "#fdfbf7",
-    300: "#fbf7f0",
-    400: "#f6efdf",
-    500: "#f6efdf",
-    600: "#cfc9bb",
-    700: "#a29e93",
-    800: "#7b7870",
-    900: "#595650",
-  },
+  brand: LEAF,
   ink: colors.slate,
+  surface: {
+    50: "#fafaf9",
+    100: "#f5f5f4",
+    200: "#e7e5e4",
+    300: "#d6d3d1",
+    400: "#a8a29e",
+    500: "#78716c",
+    600: "#57534e",
+    700: "#44403c",
+    800: "#292524",
+    900: "#1c1917",
+  },
 };
 
 /**
