@@ -28,3 +28,8 @@ venv/
 
 # Serverless
 .serverless/
+
+# Banco de dados local (gerado pelo seed e pelas migrações)
+*.db
+*.db-journal
+*.db-wal
