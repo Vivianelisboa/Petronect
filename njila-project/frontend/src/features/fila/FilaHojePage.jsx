@@ -13,7 +13,6 @@ import { Skeleton } from "../../design/ui/Skeleton";
 import { ToastStack } from "../../design/ui/ToastStack";
 import { CardCaso } from "./CardCaso";
 import { ResumoFila } from "./ResumoFila";
-import { Triagem } from "./Triagem";
 
 const TOAST_POR_ACAO = {
   marcar_resolvido: "fila.toast_resolvido",
@@ -42,6 +41,7 @@ export function FilaHojePage() {
     criticos: comOverride.filter((item) => item.score >= 80).length,
     pendente: comOverride.filter((item) => item.situacao === "pendente").length,
     em_atendimento: comOverride.filter((item) => item.situacao === "em_atendimento").length,
+    adiado: comOverride.filter((item) => item.situacao === "adiado").length,
     resolvido: comOverride.filter((item) => item.situacao === "resolvido").length,
   };
 
@@ -116,9 +116,7 @@ export function FilaHojePage() {
         </Select>
       </div>
 
-      <Triagem valor={segmento} onSelecionar={setSegmento} />
-
-      {/* Lista em linhas */}
+      {/* Cards de operação */}
       {carregando ? (
         <div className="space-y-0 divide-y divide-ink-100">
           {[0, 1, 2].map((indice) => (
