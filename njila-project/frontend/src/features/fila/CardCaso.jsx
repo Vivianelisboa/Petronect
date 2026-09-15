@@ -27,14 +27,15 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
   const detalhes = `${t("fila.ultimo_acesso")}: ${item.ultimo_acesso} · ${t("fila.parado_ha_dias", { count: item.dias_parado })}`;
 
   return (
-    <article
-      title={detalhes}
-      className={cn(
+    <>
+      <article
+        title={detalhes}
+        className={cn(
         "group flex min-h-[278px] flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-100/80 transition-all duration-200",
         "hover:-translate-y-0.5 hover:shadow-lg hover:ring-ink-200",
         saindo && "scale-[0.98] opacity-0"
-      )}
-    >
+        )}
+      >
       <div className="flex items-start justify-between gap-4">
         <div className="flex min-w-0 items-start gap-3">
           <IconTile
@@ -122,6 +123,7 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
         </div>
       </div>
 
+      </article>
       {previewAberto && (
         <EmpresaPreview
           item={item}
@@ -134,7 +136,7 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
           t={t}
         />
       )}
-    </article>
+    </>
   );
 }
 
