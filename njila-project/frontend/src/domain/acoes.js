@@ -23,5 +23,39 @@ export const ACOES_FICHA = [
   "marcar_resolvido",
 ];
 
+/** Ações disponíveis no menu do card da Fila, na ordem em que aparecem. */
+export const ACOES_FILA = [
+  "enviar_mensagem",
+  "enviar_tutorial",
+  "encaminhar_atendimento",
+  "marcar_resolvido",
+  "adiar",
+];
+
+/**
+ * Ação primária (o botão de destaque do card) por momento da jornada.
+ * É a recomendação que o motor de regras já descreve em `acao_recomendada`.
+ */
+const ACAO_PRIMARIA_POR_MOMENTO = {
+  chegou_perdeu: "enviar_tutorial",
+  parou_cadastro: "enviar_tutorial",
+  quis_participar_travou: "encaminhar_atendimento",
+  era_ativa_sumiu: "enviar_mensagem",
+  oportunidade_quente: "enviar_mensagem",
+};
+
+export function acaoPrimaria(momento) {
+  return ACAO_PRIMARIA_POR_MOMENTO[momento] || null;
+}
+
+/** Situação resultante de cada ação — usada para atualizar o card de imediato. */
+export const SITUACAO_POR_ACAO = {
+  enviar_mensagem: "em_atendimento",
+  enviar_tutorial: "em_atendimento",
+  encaminhar_atendimento: "em_atendimento",
+  marcar_resolvido: "resolvido",
+  adiar: "adiado",
+};
+
 /** Canal padrão usado nas ações rápidas do protótipo. */
 export const CANAL_PADRAO = "email";

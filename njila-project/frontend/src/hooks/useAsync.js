@@ -7,6 +7,9 @@ import { useCallback, useEffect, useState } from "react";
  *
  * É a base de todos os hooks de dados, para que nenhuma feature precise
  * reimplementar `useState + useEffect + try/catch`.
+ *
+ * `recarregar({ silencioso: true })` refaz a busca sem acionar o estado de
+ * carregamento — usado depois de uma ação, para não piscar a lista inteira.
  */
 export function useAsync(fn, deps = []) {
   const [dados, setDados] = useState(null);
@@ -14,8 +17,9 @@ export function useAsync(fn, deps = []) {
   const [erro, setErro] = useState(null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const executar = useCallback(async () => {
-    setCarregando(true);
+  const executar = useCallback(async (opcoes = {}) => {
+    const silencioso = opcoes?.silencioso === true;
+    if (!silencioso) setCarregando(true);
     setErro(null);
     try {
       const resultado = await fn();
@@ -25,7 +29,7 @@ export function useAsync(fn, deps = []) {
       setErro(e);
       return null;
     } finally {
-      setCarregando(false);
+      if (!silencioso) setCarregando(false);
     }
   }, deps);
 

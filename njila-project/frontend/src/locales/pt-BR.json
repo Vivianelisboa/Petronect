@@ -9,6 +9,7 @@
   "comum": {
     "carregando": "Carregando...",
     "ver_ficha": "Ver ficha",
+    "tentar_de_novo": "Tentar de novo",
     "pagina_nao_encontrada": "Página não encontrada",
     "voltar_para_fila": "Volte para a Fila de Hoje pelo menu acima."
   },
@@ -33,6 +34,14 @@
     "oportunidade_quente": "Oportunidade quente",
     "jornada_concluida": "Jornada concluída"
   },
+  "jornada": {
+    "acessou": "Acessou",
+    "buscou": "Buscou",
+    "abriu": "Abriu",
+    "cadastro": "Cadastro",
+    "taxa": "Taxa",
+    "concluiu": "Concluiu"
+  },
   "acao": {
     "enviar_mensagem": "Enviar mensagem",
     "enviar_tutorial": "Enviar tutorial",
@@ -41,19 +50,27 @@
     "adiar": "Adiar ação"
   },
   "fila": {
-    "titulo": "Empresas que precisam de atenção",
-    "subtitulo": "Quem precisa de atenção hoje",
+    "titulo": "Fila de Hoje",
+    "subtitulo": "Quem precisa de atenção agora",
     "filtrar_por_momento": "Filtrar por momento",
     "todos_momentos": "Todos os momentos",
-    "coluna_empresa": "Empresa",
-    "coluna_momento": "Momento",
-    "coluna_prioridade": "Prioridade",
+    "todos": "Todos",
     "coluna_situacao": "Situação",
-    "coluna_proximo_passo": "Próximo passo",
-    "enviar_tutorial": "Enviar tutorial",
-    "mensagem_tutorial_automatico": "Tutorial enviado automaticamente.",
-    "vazia_titulo": "Nada por aqui",
-    "vazia_descricao": "Nenhuma empresa pendente neste filtro."
+    "resumo": {
+      "criticos": "Críticos",
+      "pendente": "Aguardando 1ª ação",
+      "em_atendimento": "Em atendimento",
+      "resolvido": "Resolvidos"
+    },
+    "ultimo_acesso": "Último acesso",
+    "parado_ha_dias_one": "parado há {{count}} dia",
+    "parado_ha_dias_other": "parado há {{count}} dias",
+    "proximo_passo": "Próximo passo",
+    "mais_acoes": "Mais ações",
+    "vazia_titulo": "Nada pendente aqui",
+    "vazia_descricao": "Nenhuma empresa precisa de atenção neste recorte — bom trabalho.",
+    "erro_titulo": "Não foi possível carregar a fila",
+    "erro_descricao": "Verifique se o backend está rodando e tente de novo."
   },
   "ficha": {
     "voltar": "Fila de Hoje",
