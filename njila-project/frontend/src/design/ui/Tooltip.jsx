@@ -9,6 +9,7 @@ export function Tooltip({ label, children, className }) {
     <span className={cn("group relative inline-flex", className)}>
       <span
         tabIndex={0}
+        aria-label={label}
         aria-describedby={id}
         className="inline-flex cursor-help rounded-full outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
       >

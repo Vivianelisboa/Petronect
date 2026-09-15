@@ -67,9 +67,8 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
       <div className="mt-3 flex items-center justify-between">
         {item.score_explicacao ? (
           <Tooltip label={item.score_explicacao}>
-            <span className="inline-flex items-center gap-1 text-xs font-medium text-ink-400 hover:text-ink-700">
-              <Info size={13} />
-              Por que esta prioridade?
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700">
+              <Info size={14} />
             </span>
           </Tooltip>
         ) : <span />}
