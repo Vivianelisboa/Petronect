@@ -116,14 +116,7 @@ export function FilaHojePage() {
           </h1>
           <p className="mt-1 text-sm text-ink-500">{t("central.descricao")}</p>
         </div>
-        <div className="flex w-full flex-wrap items-end justify-end gap-3 sm:w-auto">
-          <SearchField
-            value={busca}
-            onChange={setBusca}
-            placeholder={t("central.buscar")}
-            className="w-full sm:w-64"
-          />
-          <label className="flex items-center gap-3 text-right">
+        <label className="flex items-center gap-3 text-right">
             <span className="text-[10px] font-bold uppercase tracking-wider text-ink-400">{t("central.data")}</span>
             <input
               type="date"
@@ -131,8 +124,7 @@ export function FilaHojePage() {
               onChange={(e) => setDataReferencia(e.target.value)}
               className="h-10 rounded-lg border border-ink-200 bg-white px-3 text-sm font-medium text-ink-700 shadow-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
             />
-          </label>
-        </div>
+        </label>
       </header>
 
       {/* Stats hero + filtros */}
@@ -143,23 +135,31 @@ export function FilaHojePage() {
           ativo={segmento}
           onSelecionar={setSegmento}
         />
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="text-xs font-semibold uppercase tracking-wider text-ink-400">
             {t("fila.filtrar_por_momento")}
           </span>
-          <Select
-            aria-label={t("fila.filtrar_por_momento")}
-            value={momento}
-            onChange={(e) => setMomento(e.target.value)}
-            className="w-full max-w-xs"
-          >
-            <option value="">{t("fila.todos_momentos")}</option>
-            {MOMENTOS_FILTRAVEIS.map((momentoId) => (
-              <option key={momentoId} value={momentoId}>
-                {t(getMomento(momentoId).i18nKey)}
-              </option>
-            ))}
-          </Select>
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <SearchField
+              value={busca}
+              onChange={setBusca}
+              placeholder={t("central.buscar")}
+              className="w-full sm:w-64"
+            />
+            <Select
+              aria-label={t("fila.filtrar_por_momento")}
+              value={momento}
+              onChange={(e) => setMomento(e.target.value)}
+              className="w-full sm:w-64"
+            >
+              <option value="">{t("fila.todos_momentos")}</option>
+              {MOMENTOS_FILTRAVEIS.map((momentoId) => (
+                <option key={momentoId} value={momentoId}>
+                  {t(getMomento(momentoId).i18nKey)}
+                </option>
+              ))}
+            </Select>
+          </div>
         </div>
       </div>
 
