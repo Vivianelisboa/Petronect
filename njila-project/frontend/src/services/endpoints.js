@@ -9,6 +9,7 @@ import {
   EmpresaSchema,
   AssistenteSchema,
   ChatRespostaSchema,
+  IndicadoresSchema,
 } from "./schemas";
 
 export async function buscarFilaHoje({ momento, limit, data } = {}) {
@@ -49,4 +50,11 @@ export async function enviarMensagemChat({ empresaId, mensagem }) {
 
 export async function buscarResumo() {
   return apiFetch(`/resumo`);
+}
+
+export async function buscarIndicadores({ periodo } = {}) {
+  const params = new URLSearchParams();
+  if (periodo) params.set("periodo", periodo);
+  const resposta = await apiFetch(`/indicadores?${params.toString()}`);
+  return IndicadoresSchema.parse(resposta);
 }
