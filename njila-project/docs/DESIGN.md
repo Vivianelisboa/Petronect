@@ -10,7 +10,7 @@ editorial) e **tbh / Studiovoilà** (calor humano).
 
 > **Identidade:** fonte **Garet** (Book para corpo, Heavy para títulos) e logo
 > *"portal njila"* — wordmark preta em caixa baixa, renderizada como texto.
-> O **acento de marca** ainda está em aberto (hoje, verde provisório).
+> Acento de marca: **azul corporativo**.
 
 ---
 
@@ -30,8 +30,8 @@ editorial) e **tbh / Studiovoilà** (calor humano).
 
 | Token | Decisão | Origem |
 |---|---|---|
-| Base neutra | branco / slate (fundo); grafite para texto | Ruul |
-| Acento de marca | **1 cor** (definida pela logo) — usada só em ação/estado | Ruul |
+| Base neutra | branco / slate (fundo); neutro `ink` para texto | Ruul |
+| Acento de marca | **azul corporativo** (`brand`) — ação e estado ativo; "info" em *sky* para não competir | Ruul |
 | Status | semânticos: neutro · info · atenção · crítico · sucesso | já implementado |
 | Tipografia | **Garet** — Book (corpo) e Heavy (títulos); números tabulares em dados | identidade + Ruul |
 | Escala de espaço | múltiplos de 4; generoso no respiro, contido na densidade | Brevo |

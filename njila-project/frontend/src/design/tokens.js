@@ -9,8 +9,8 @@ import colors from "tailwindcss/colors";
 
 /** Cores da marca e da interface. */
 export const palette = {
-  brand: colors.green, // verde Njila / Petronect
-  ink: colors.blue, // azul profundo do Portal
+  brand: colors.blue, // azul corporativo — acento de ação e estado ativo
+  ink: colors.slate, // neutro de texto e superfície (base monocromática)
 };
 
 /**
@@ -20,7 +20,7 @@ export const palette = {
  */
 export const status = {
   neutral: colors.slate,
-  info: colors.blue,
+  info: colors.sky,
   success: colors.green,
   warning: colors.amber,
   danger: colors.red,
