@@ -7,6 +7,8 @@ export default {
     extend: {
       colors: {
         brand: palette.brand,
+        leaf: palette.leaf,
+        cream: palette.cream,
         ink: palette.ink,
       },
       fontFamily: {
