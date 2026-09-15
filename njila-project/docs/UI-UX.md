@@ -5,7 +5,7 @@ Registra o benchmarking, os princípios adotados, o vocabulário canônico e a
 arquitetura de informação — para as decisões não se perderem entre sessões.
 
 Base: `MVP - Njila (Hackaton Petronect).pdf` (visão geral, painel operacional,
-Fila de Hoje, Ficha da empresa, Funcionalidade 1 — Score, Funcionalidade 2 —
+Central de Operações, Ficha da empresa, Funcionalidade 1 — Score, Funcionalidade 2 —
 Assistente).
 
 ---
@@ -65,7 +65,7 @@ São **dois eixos diferentes**:
 
 ```
 PAINEL OPERACIONAL (Marketing / Atendimento)
-├── Fila de Hoje — "quem precisa de atenção agora?"
+├── Central de Operações — "quem precisa de atenção agora?"
 │   ├── Resumo (hero): críticos · em atendimento · aguardando 1ª ação
 │   ├── Segmentos de situação: Pendente · Em atendimento · Adiado · Resolvido
 │   ├── Lista priorizada (o produto ordena)
@@ -83,8 +83,8 @@ TRANSVERSAL
 └── Assistente do fornecedor — card proativo + chat (visão do Portal; modo demonstração)
 ```
 
-**Navegação:** 2 destinos (`Fila de Hoje`, `Assistente`). A Ficha é detalhe,
-alcançada a partir da Fila, com "← Fila de Hoje".
+**Navegação:** 2 destinos (`Central de Operações`, `Assistente`). A Ficha é detalhe,
+alcançada a partir da Central, com "← Central de Operações".
 
 ---
 

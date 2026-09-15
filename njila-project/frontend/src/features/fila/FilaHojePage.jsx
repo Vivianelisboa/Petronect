@@ -21,8 +21,7 @@ const TOAST_POR_ACAO = {
 };
 
 /** 
- * Página da Fila — layout moderno com sidebar.
- * Lista em linhas (estilo Linear/GitHub), não cards.
+ * Central de Operações: filtros gamificados e cards corporativos.
  */
 export function FilaHojePage() {
   const { t } = useTranslation();
@@ -148,18 +147,16 @@ export function FilaHojePage() {
           />
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-ink-200 bg-white shadow-sm">
-          <div className="divide-y divide-ink-100">
-            {filtrada.map((item) => (
-              <CardCaso
-                key={item.empresa_id}
-                item={item}
-                saindo={saindo.includes(item.empresa_id)}
-                onVerFicha={(empresaId) => navigate(`/empresa/${empresaId}`)}
-                onAcao={handleAcao}
-              />
-            ))}
-          </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {filtrada.map((item) => (
+            <CardCaso
+              key={item.empresa_id}
+              item={item}
+              saindo={saindo.includes(item.empresa_id)}
+              onVerFicha={(empresaId) => navigate(`/empresa/${empresaId}`)}
+              onAcao={handleAcao}
+            />
+          ))}
         </div>
       )}
 

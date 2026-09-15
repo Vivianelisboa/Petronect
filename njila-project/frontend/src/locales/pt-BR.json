@@ -6,7 +6,7 @@
   },
   "nav": {
     "menu": "Menu",
-    "fila": "Fila de Hoje",
+    "fila": "Central de Operações",
     "assistente": "Assistente"
   },
   "comum": {
@@ -14,7 +14,7 @@
     "ver_ficha": "Ver ficha",
     "tentar_de_novo": "Tentar de novo",
     "pagina_nao_encontrada": "Página não encontrada",
-    "voltar_para_fila": "Volte para a Fila de Hoje pelo menu acima."
+    "voltar_para_fila": "Volte para a Central de Operações pelo menu acima."
   },
   "prioridade": {
     "rotulo": "Prioridade",
@@ -53,7 +53,7 @@
     "adiar": "Adiar ação"
   },
   "fila": {
-    "titulo": "Fila de Hoje",
+    "titulo": "Central de Operações",
     "subtitulo": "Quem precisa de atenção agora",
     "filtrar_por_momento": "Filtrar por momento",
     "todos_momentos": "Todos os momentos",
@@ -80,8 +80,8 @@
     "erro_descricao": "Verifique se o backend está rodando e tente de novo."
   },
   "ficha": {
-    "voltar": "Fila de Hoje",
-    "selecione": "Selecione uma empresa na Fila de Hoje.",
+    "voltar": "Central de Operações",
+    "selecione": "Selecione uma empresa na Central de Operações.",
     "nao_encontrada": "Empresa não encontrada.",
     "linha_do_tempo": "Linha do tempo da jornada",
     "registro_acoes": "Registro de ações",

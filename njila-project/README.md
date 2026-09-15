@@ -54,7 +54,7 @@ já consumindo os dados do backend.
 
 ## O que cada aba do painel mostra
 
-- **Fila de Hoje**: lista de empresas que precisam de atenção, ordenadas
+- **Central de Operações**: lista de empresas que precisam de atenção, ordenadas
   por Score de prioridade, com o motivo explicado
 - **Ficha da Empresa**: clicando em "Ver ficha" numa empresa da fila,
   mostra a linha do tempo completa da jornada dela + histórico de ações

@@ -10,11 +10,11 @@ import { getMomento } from "../../domain/momentos";
 import { getSituacao } from "../../domain/situacao";
 import { ACOES, ACOES_FILA, acaoPrimaria } from "../../domain/acoes";
 import { iconeDoMomento } from "./iconesMomento";
+import { MiniJornada } from "./MiniJornada";
 
 /**
- * Row-caso: layout em linha (estilo Linear/GitHub).
- * Compacto, escaneável, sem bordas — só divisores sutis.
- * Hover revela ações e destaca a linha.
+ * Card-caso: uma unidade de decisão com linguagem de missão,
+ * mas hierarquia e ações próprias de um produto corporativo.
  */
 export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
   const { t } = useTranslation();
@@ -29,45 +29,58 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
     <article
       title={detalhes}
       className={cn(
-        "group flex items-center gap-4 px-5 py-4 transition-all duration-150",
-        "hover:bg-surface-50",
+        "group flex min-h-[278px] flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-100/80 transition-all duration-200",
+        "hover:-translate-y-0.5 hover:shadow-lg hover:ring-ink-200",
         saindo && "scale-[0.98] opacity-0"
       )}
     >
-      {/* Ícone do momento */}
-      <IconTile icon={iconeDoMomento(item.momento)} variant={momento.variante} size={16} />
-
-      {/* Info principal */}
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <h3 className="truncate text-sm font-semibold text-ink-900">{item.nome_empresa}</h3>
-          <Badge variant={momento.variante} className="hidden sm:inline-flex">{t(momento.i18nKey)}</Badge>
-          <Badge variant={situacao.variante} className="hidden sm:inline-flex">{t(situacao.i18nKey)}</Badge>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex min-w-0 items-start gap-3">
+          <IconTile
+            icon={iconeDoMomento(item.momento)}
+            variant={momento.variante}
+            size={21}
+            className="h-14 w-14 rounded-2xl"
+          />
+          <div className="min-w-0 pt-0.5">
+            <h3 className="truncate text-base font-bold tracking-tight text-ink-900">{item.nome_empresa}</h3>
+            <p className="mt-1 truncate text-xs text-ink-500">{item.segmento}</p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <Badge variant={momento.variante}>{t(momento.i18nKey)}</Badge>
+              <Badge variant={situacao.variante}>{t(situacao.i18nKey)}</Badge>
+            </div>
+          </div>
         </div>
-        <p className="mt-0.5 text-xs text-ink-400">{item.segmento} · {item.acao_recomendada}</p>
-        
-        {item.score_explicacao && (
-          <p className="mt-1.5 flex items-start gap-1 text-xs text-ink-500">
-            <Info size={12} className="mt-0.5 shrink-0 text-ink-300" />
-            <span className="line-clamp-1">{item.score_explicacao}</span>
-          </p>
-        )}
+        <PriorityRing score={item.score} size={52} />
       </div>
 
-      {/* Prioridade + Ações (aparecem no hover) */}
-      <div className="flex shrink-0 items-center gap-3">
-        <PriorityRing score={item.score} size={40} />
-        
-        <div className="hidden items-center gap-1.5 opacity-0 transition-opacity group-hover:opacity-100 sm:flex">
+      <div className="mt-5 rounded-xl bg-surface-50 px-3 py-3">
+        <div className="mb-2 flex items-center justify-between">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Jornada</span>
+          <span className="text-[10px] font-medium text-ink-400">{item.dias_parado}d sem retorno</span>
+        </div>
+        <MiniJornada momento={item.momento} />
+      </div>
+
+      {item.score_explicacao && (
+        <p className="mt-3 flex min-h-[32px] items-start gap-1.5 text-xs leading-relaxed text-ink-500">
+          <Info size={13} className="mt-0.5 shrink-0 text-ink-300" />
+          <span className="line-clamp-2">{item.score_explicacao}</span>
+        </p>
+      )}
+
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-ink-100 pt-4">
+        <p className="min-w-0 truncate text-xs text-ink-500">
+          <span className="text-ink-400">Próximo: </span>
+          <span className="font-semibold text-ink-700">{item.acao_recomendada}</span>
+        </p>
+
+        <div className="flex shrink-0 items-center gap-1.5">
           {primaria && (
             <Button size="sm" onClick={() => onAcao(item.empresa_id, primaria, item.nome_empresa)}>
               {t(ACOES[primaria])}
             </Button>
           )}
-          <Button variant="ghost" size="sm" onClick={() => onVerFicha(item.empresa_id)}>
-            {t("comum.ver_ficha")}
-          </Button>
-
           <div className="relative">
             <Button
               variant="ghost"
@@ -78,11 +91,10 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
             >
               <MoreHorizontal size={16} />
             </Button>
-
             {menuAberto && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setMenuAberto(false)} />
-                <div className="absolute right-0 top-full z-20 mt-1 w-56 overflow-hidden rounded-xl border border-ink-100 bg-white py-1 shadow-lg">
+                <div className="absolute bottom-full right-0 z-20 mb-1 w-56 overflow-hidden rounded-xl border border-ink-100 bg-white py-1 shadow-lg">
                   {ACOES_FILA.map((tipo) => (
                     <button
                       key={tipo}
@@ -91,7 +103,7 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
                         onAcao(item.empresa_id, tipo, item.nome_empresa);
                       }}
                       className={cn(
-                        "block w-full px-3 py-2 text-left text-sm text-ink-700 hover:bg-surface-50 transition-colors",
+                        "block w-full px-3 py-2 text-left text-sm text-ink-700 transition-colors hover:bg-surface-50",
                         tipo === primaria && "text-ink-300"
                       )}
                     >

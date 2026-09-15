@@ -50,7 +50,7 @@ Fonte única: `frontend/src/design/tokens.js` (o Tailwind importa daqui).
 
 - **Cabeçalho:** filete verde no topo, tile com o símbolo do caminho (azul),
   wordmark em Garet Heavy ("njila" em azul), tagline e público à direita.
-- **Navegação:** 2 destinos — `Fila de Hoje` · `Assistente`. Item ativo com
+- **Navegação:** 2 destinos — `Central de Operações` · `Assistente`. Item ativo com
   sublinhado no acento de marca.
 - **Conteúdo:** largura máxima por tela; a Fila usa largura cheia, a Ficha e a
   Paola usam coluna centrada.
@@ -58,7 +58,7 @@ Fonte única: `frontend/src/design/tokens.js` (o Tailwind importa daqui).
 
 ---
 
-## 4. Seção — Fila de Hoje
+## 4. Seção — Central de Operações
 
 **Pergunta:** *quem precisa de atenção agora?*
 
@@ -97,7 +97,7 @@ Fonte única: `frontend/src/design/tokens.js` (o Tailwind importa daqui).
 **Pergunta:** *o que aconteceu e qual o próximo passo?*
 
 ### Estrutura
-1. **Voltar** — "← Fila de Hoje" (é detalhe, não aba).
+1. **Voltar** — "← Central de Operações" (é detalhe, não aba).
 2. **Cabeçalho** — nome, CNPJ mascarado, segmento, momento, prioridade.
 3. **Próximo passo** — card com 1 ação primária e um "por que agora".
 4. **Fatos** — grade: primeiro acesso, primeiro clique, frequência de retorno,
