@@ -1,7 +1,7 @@
 import { cn } from "../../lib/cn";
 
 const VARIANTES = {
-  primary: "bg-brand-600 text-white hover:bg-brand-700 focus-visible:ring-brand-500",
+  primary: "bg-brand-700 text-white hover:bg-brand-800 focus-visible:ring-brand-500",
   secondary: "border border-ink-200 bg-white text-ink-700 hover:bg-ink-50 focus-visible:ring-ink-400",
   ghost: "text-ink-600 hover:bg-ink-50 focus-visible:ring-ink-300",
   danger: "bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500",

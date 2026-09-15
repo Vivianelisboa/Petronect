@@ -92,7 +92,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
             <div key={indice} className={meu ? "flex flex-col items-end" : "flex flex-col items-start"}>
               <div
                 className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                  meu ? "bg-brand-600 text-white" : "bg-slate-100 text-ink-800"
+                  meu ? "bg-brand-700 text-white" : "bg-slate-100 text-ink-800"
                 }`}
               >
                 {mensagem.texto}

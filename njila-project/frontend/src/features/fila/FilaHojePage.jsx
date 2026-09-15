@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { CheckCircle2, Inbox, ServerCrash } from "lucide-react";
+import { ServerCrash, Trophy } from "lucide-react";
 import { useFilaHoje } from "../../hooks/useFilaHoje";
 import { registrarAcao } from "../../services/endpoints";
 import { ACOES, CANAL_PADRAO, SITUACAO_POR_ACAO } from "../../domain/acoes";
@@ -10,9 +10,15 @@ import { Button } from "../../design/ui/Button";
 import { EmptyState } from "../../design/ui/EmptyState";
 import { Select } from "../../design/ui/Select";
 import { Skeleton } from "../../design/ui/Skeleton";
+import { ToastStack } from "../../design/ui/ToastStack";
 import { CardCaso } from "./CardCaso";
 import { ResumoFila } from "./ResumoFila";
 import { Triagem } from "./Triagem";
+
+const TOAST_POR_ACAO = {
+  marcar_resolvido: "fila.toast_resolvido",
+  adiar: "fila.toast_adiado",
+};
 
 /** Página principal: quem precisa de atenção agora, ordenado por prioridade. */
 export function FilaHojePage() {
@@ -21,6 +27,8 @@ export function FilaHojePage() {
   const [momento, setMomento] = useState("");
   const [segmento, setSegmento] = useState("todos");
   const [overrides, setOverrides] = useState({});
+  const [saindo, setSaindo] = useState([]);
+  const [toasts, setToasts] = useState([]);
 
   const { fila, carregando, erro, recarregar } = useFilaHoje({ momento: momento || undefined });
 
@@ -41,9 +49,31 @@ export function FilaHojePage() {
     return item.situacao === segmento;
   });
 
-  async function handleAcao(empresaId, tipoAcao) {
-    // Atualiza o card de imediato (otimista) e confirma com o backend depois.
-    setOverrides((atual) => ({ ...atual, [empresaId]: SITUACAO_POR_ACAO[tipoAcao] }));
+  function dispararToast(texto) {
+    const id = `${Date.now()}-${Math.random()}`;
+    setToasts((atual) => [...atual, { id, texto }]);
+    setTimeout(() => setToasts((atual) => atual.filter((toast) => toast.id !== id)), 3200);
+  }
+
+  async function handleAcao(empresaId, tipoAcao, nomeEmpresa) {
+    const novaSituacao = SITUACAO_POR_ACAO[tipoAcao];
+    const chaveToast = TOAST_POR_ACAO[tipoAcao] || "fila.toast_acao";
+    dispararToast(t(chaveToast, { empresa: nomeEmpresa }));
+
+    const mudaDeSegmento =
+      segmento !== "todos" && segmento !== "criticos" && novaSituacao !== segmento;
+
+    if (mudaDeSegmento) {
+      // O card sai da vista com transição antes de mudar de situação.
+      setSaindo((atual) => [...atual, empresaId]);
+      setTimeout(() => {
+        setOverrides((atual) => ({ ...atual, [empresaId]: novaSituacao }));
+        setSaindo((atual) => atual.filter((id) => id !== empresaId));
+      }, 300);
+    } else {
+      setOverrides((atual) => ({ ...atual, [empresaId]: novaSituacao }));
+    }
+
     try {
       await registrarAcao(empresaId, {
         tipo_acao: tipoAcao,
@@ -83,7 +113,12 @@ export function FilaHojePage() {
       </header>
 
       {!erro && (fila.length > 0 || !carregando) && (
-        <ResumoFila contagens={contagens} ativo={segmento} onSelecionar={setSegmento} />
+        <ResumoFila
+          contagens={contagens}
+          total={comOverride.length}
+          ativo={segmento}
+          onSelecionar={setSegmento}
+        />
       )}
 
       <Triagem valor={segmento} onSelecionar={setSegmento} />
@@ -108,9 +143,9 @@ export function FilaHojePage() {
           />
         </div>
       ) : filtrada.length === 0 ? (
-        <div className="rounded-2xl border border-cream-600/50 bg-cream-300">
+        <div className="rounded-2xl border border-cream-600/50 bg-cream-400">
           <EmptyState
-            icon={segmento === "todos" ? CheckCircle2 : Inbox}
+            icon={Trophy}
             title={t("fila.vazia_titulo")}
             description={t("fila.vazia_descricao")}
           />
@@ -121,27 +156,38 @@ export function FilaHojePage() {
             <CardCaso
               key={item.empresa_id}
               item={item}
+              saindo={saindo.includes(item.empresa_id)}
               onVerFicha={(empresaId) => navigate(`/empresa/${empresaId}`)}
               onAcao={handleAcao}
             />
           ))}
         </div>
       )}
+
+      <ToastStack toasts={toasts} />
     </section>
   );
 }
 
 function CardCasoSkeleton() {
   return (
-    <div className="rounded-xl border border-ink-200 bg-white p-5 shadow-card">
-      <Skeleton className="h-5 w-56" />
-      <Skeleton className="mt-2 h-3 w-32" />
-      <Skeleton className="mt-5 h-4 w-64" />
-      <Skeleton className="mt-2 h-3 w-80" />
-      <Skeleton className="mt-5 h-6 w-full" />
-      <div className="mt-5 flex items-center justify-between">
+    <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-card">
+      <div className="flex items-start gap-3.5">
+        <Skeleton className="h-11 w-11 rounded-xl" />
+        <div className="flex-1 space-y-2">
+          <Skeleton className="h-5 w-48" />
+          <Skeleton className="h-3 w-28" />
+          <div className="flex gap-2">
+            <Skeleton className="h-5 w-28 rounded-full" />
+            <Skeleton className="h-5 w-20 rounded-full" />
+          </div>
+        </div>
+        <Skeleton className="h-11 w-11 rounded-full" />
+      </div>
+      <Skeleton className="mt-4 h-6 w-full" />
+      <div className="mt-3 flex items-center justify-between">
         <Skeleton className="h-3 w-40" />
-        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-8 w-44 rounded-md" />
       </div>
     </div>
   );

@@ -19,5 +19,5 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-50 text-ink-900 antialiased;
+  @apply bg-cream-200 text-ink-900 antialiased;
 }

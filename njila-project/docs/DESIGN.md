@@ -9,9 +9,10 @@ Referências de design: **Brevo** (estrutura SaaS), **Ruul** (minimalismo
 editorial) e **tbh / Studiovoilà** (calor humano).
 
 > **Identidade:** fonte **Garet** (Book para corpo, Heavy para títulos) e logo
-> *"portal njila"* — wordmark preta em caixa baixa, renderizada como texto.
-> Cores de marca: **azul corporativo** (ação), verde **`#70bb44`** (identidade)
-> e creme **`#f6efdf`** (superfície quente).
+> *"portal njila"* — wordmark em Garet Heavy com "njila" no azul de ação, tile
+> com o símbolo do caminho e tagline *"o caminho do fornecedor"* (njila, em
+> kimbundu). Cores: **azul corporativo** = ação; **verde `#70bb44`** = jornada
+> (trilha, progresso, concluído); **creme `#f6efdf`** = fundo da página.
 
 ---
 
@@ -31,10 +32,10 @@ editorial) e **tbh / Studiovoilà** (calor humano).
 
 | Token | Decisão | Origem |
 |---|---|---|
-| Base neutra | branco / slate (fundo); neutro `ink` para texto | Ruul |
-| Ação | **azul corporativo** (`brand`) — botões, foco, item ativo | Ruul |
-| Verde da marca | **`#70bb44`** (`leaf`) — identidade e estados positivos | identidade |
-| Superfície quente | **`#f6efdf`** (`cream`) — blocos de destaque | tbh |
+| Fundo | creme **`#f6efdf`** (`cream`) na página inteira; cards em branco | tbh |
+| Ação | **azul corporativo** (`brand`) — botões, navegação ativa, foco | Ruul |
+| Jornada | **verde `#70bb44`** (`leaf`) — trilha, barra da meta, concluído | Portal Petronect |
+| Neutro | `ink` (slate) — texto e superfícies brancas | Ruul |
 | Status | neutro · info (*sky*) · atenção · crítico · sucesso (`leaf`) | já implementado |
 | Tipografia | **Garet** — Book (corpo) e Heavy (títulos); números tabulares em dados | identidade + Ruul |
 | Escala de espaço | múltiplos de 4; generoso no respiro, contido na densidade | Brevo |
@@ -47,7 +48,8 @@ Fonte única: `frontend/src/design/tokens.js` (o Tailwind importa daqui).
 
 ## 3. Shell da aplicação
 
-- **Cabeçalho:** marca (logo + wordmark) à esquerda; sem ruído.
+- **Cabeçalho:** filete verde no topo, tile com o símbolo do caminho (azul),
+  wordmark em Garet Heavy ("njila" em azul), tagline e público à direita.
 - **Navegação:** 2 destinos — `Fila de Hoje` · `Assistente`. Item ativo com
   sublinhado no acento de marca.
 - **Conteúdo:** largura máxima por tela; a Fila usa largura cheia, a Ficha e a
@@ -69,13 +71,13 @@ Fonte única: `frontend/src/design/tokens.js` (o Tailwind importa daqui).
 4. **Lista** — o produto ordena por prioridade.
 
 ### Card-caso (unidade da lista)
-- Empresa em destaque + segmento (linha de apoio).
-- Selos: **momento** e **situação**.
-- **Prioridade**: número + banda + **evidência** (chips dos fatores).
-- Último acesso / tempo parado.
-- **Próximo passo**: 1 ação primária + menu de ações (mensagem, tutorial,
-  encaminhar, resolver, adiar).
-- **Mini-jornada**: as 6 etapas como trilha, mostrando onde parou.
+- **Ícone do momento** em tile colorido (a linguagem de card de ícone do Portal).
+- Empresa + segmento; selos de **momento** e **situação**.
+- **Prioridade em anel**: número, progresso e banda num só elemento.
+- **Trilha da jornada**: 6 nós com ícone, o atual destacado em verde.
+- **Evidência** em uma linha; último acesso e tempo parado no tooltip.
+- **Próximo passo**: 1 ação primária + menu (mensagem, tutorial, encaminhar,
+  resolver, adiar). Ao agir: transição do card + toast + contadores.
 
 ### Estados
 - **Carregando:** skeleton da lista (não spinner).

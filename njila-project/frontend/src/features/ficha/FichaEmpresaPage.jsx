@@ -9,7 +9,7 @@ import { Badge } from "../../design/ui/Badge";
 import { Button } from "../../design/ui/Button";
 import { Card, CardBody, CardHeader } from "../../design/ui/Card";
 import { EmptyState } from "../../design/ui/EmptyState";
-import { PriorityBadge } from "../../design/ui/PriorityBadge";
+import { PriorityRing } from "../../design/ui/PriorityRing";
 import { Spinner } from "../../design/ui/Spinner";
 import { Timeline } from "./Timeline";
 import { HistoricoAcoes } from "./HistoricoAcoes";
@@ -67,7 +67,7 @@ export function FichaEmpresaPage() {
         </div>
         {classificacao && (
           <div className="flex flex-col items-end gap-2">
-            <PriorityBadge score={classificacao.score} />
+            <PriorityRing score={classificacao.score} size={56} />
             {momento && <Badge variant={momento.variante}>{t(momento.i18nKey)}</Badge>}
           </div>
         )}

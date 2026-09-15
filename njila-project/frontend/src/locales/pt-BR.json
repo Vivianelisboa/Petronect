@@ -1,6 +1,8 @@
 {
   "app": {
-    "titulo": "portal njila"
+    "titulo": "portal njila",
+    "tagline": "o caminho do fornecedor",
+    "audiencia": "Marketing & Atendimento"
   },
   "nav": {
     "fila": "Fila de Hoje",
@@ -57,18 +59,22 @@
     "todos": "Todos",
     "coluna_situacao": "Situação",
     "resumo": {
-      "criticos": "Críticos",
+      "criticos": "Críticas",
       "pendente": "Aguardando 1ª ação",
       "em_atendimento": "Em atendimento",
-      "resolvido": "Resolvidos"
+      "resolvido": "Concluídas"
     },
+    "meta": "Concluídas hoje",
+    "toast_resolvido": "Caso encerrado — {{empresa}}",
+    "toast_adiado": "Caso adiado — {{empresa}}",
+    "toast_acao": "Ação registrada — {{empresa}}",
     "ultimo_acesso": "Último acesso",
     "parado_ha_dias_one": "parado há {{count}} dia",
     "parado_ha_dias_other": "parado há {{count}} dias",
     "proximo_passo": "Próximo passo",
     "mais_acoes": "Mais ações",
-    "vazia_titulo": "Nada pendente aqui",
-    "vazia_descricao": "Nenhuma empresa precisa de atenção neste recorte — bom trabalho.",
+    "vazia_titulo": "Fila concluída",
+    "vazia_descricao": "Todas as empresas deste recorte foram atendidas — bom trabalho.",
     "erro_titulo": "Não foi possível carregar a fila",
     "erro_descricao": "Verifique se o backend está rodando e tente de novo."
   },

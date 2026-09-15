@@ -1,11 +1,21 @@
 import { useTranslation } from "react-i18next";
+import { ClipboardList, CreditCard, FileText, Home, Search, Trophy } from "lucide-react";
 import { cn } from "../../lib/cn";
 import { ETAPAS, etapaAtual, indiceEtapa } from "../../domain/jornada";
 
+const ICONES = {
+  acessou: Home,
+  buscou: Search,
+  abriu: FileText,
+  cadastro: ClipboardList,
+  taxa: CreditCard,
+  concluiu: Trophy,
+};
+
 /**
- * Trilha das etapas da jornada, com a etapa atual marcada. Derivada do
- * `momento`; se o momento não tiver etapa associada (ex.: era_ativa_sumiu),
- * não renderiza nada.
+ * A jornada como trilha de jogo: nós com ícone, o atual maior e destacado.
+ * Sem rótulos — o nome da etapa fica no `title` de cada nó (tooltip +
+ * acessibilidade). Derivada do `momento`; sem etapa associada, não renderiza.
  */
 export function MiniJornada({ momento, className }) {
   const { t } = useTranslation();
@@ -15,47 +25,34 @@ export function MiniJornada({ momento, className }) {
   const atual = indiceEtapa(etapaId);
 
   return (
-    <div className={cn("grid grid-cols-6 gap-1", className)}>
+    <div className={cn("flex items-center", className)}>
       {ETAPAS.map((etapa, indice) => {
+        const Icone = ICONES[etapa.id];
         const passou = indice < atual;
         const agora = indice === atual;
+
         return (
-          <div key={etapa.id} className="flex flex-col items-center gap-1.5">
-            <div className="flex w-full items-center">
+          <div key={etapa.id} className="flex flex-1 items-center last:flex-none">
+            {indice > 0 && (
               <span
                 className={cn(
                   "h-0.5 flex-1",
-                  indice === 0 ? "bg-transparent" : passou || agora ? "bg-brand-300" : "bg-ink-200"
+                  indice <= atual ? "bg-leaf-300" : "bg-ink-200"
                 )}
               />
-              <span
-                className={cn(
-                  "h-2.5 w-2.5 shrink-0 rounded-full transition",
-                  agora
-                    ? "bg-brand-600 ring-4 ring-brand-100"
-                    : passou
-                      ? "bg-brand-500"
-                      : "bg-ink-200"
-                )}
-              />
-              <span
-                className={cn(
-                  "h-0.5 flex-1",
-                  indice === ETAPAS.length - 1
-                    ? "bg-transparent"
-                    : passou
-                      ? "bg-brand-300"
-                      : "bg-ink-200"
-                )}
-              />
-            </div>
+            )}
             <span
+              title={t(etapa.i18nKey)}
               className={cn(
-                "text-center text-[10px] leading-none",
-                agora ? "font-bold text-ink-800" : passou ? "text-ink-500" : "text-ink-400"
+                "flex shrink-0 items-center justify-center rounded-full transition-all",
+                agora
+                  ? "h-8 w-8 bg-leaf-600 text-white ring-4 ring-leaf-100"
+                  : "h-6 w-6",
+                passou && "bg-leaf-500 text-white",
+                !passou && !agora && "border border-ink-200 bg-white text-ink-300"
               )}
             >
-              {t(etapa.i18nKey)}
+              <Icone size={agora ? 15 : 12} />
             </span>
           </div>
         );
