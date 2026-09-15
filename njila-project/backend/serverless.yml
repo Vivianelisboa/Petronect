@@ -1,0 +1,51 @@
+service: njila-backend
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  memorySize: 256
+  timeout: 10
+  environment:
+    NJILA_DB_PATH: /var/task/njila.db
+
+functions:
+  filaHoje:
+    handler: handlers/filaHoje.handler
+    events:
+      - httpApi: { path: /fila-hoje, method: get }
+
+  empresa:
+    handler: handlers/empresa.handler
+    events:
+      - httpApi: { path: /empresa/{empresaId}, method: get }
+
+  registrarAcao:
+    handler: handlers/registrarAcao.handler
+    events:
+      - httpApi: { path: /empresa/{empresaId}/acao, method: post }
+
+  resumo:
+    handler: handlers/resumo.handler
+    events:
+      - httpApi: { path: /resumo, method: get }
+
+  assistente:
+    handler: handlers/assistente.handler
+    events:
+      - httpApi: { path: /empresa/{empresaId}/assistente, method: get }
+
+  chat:
+    handler: handlers/chat.handler
+    events:
+      - httpApi: { path: /chat, method: post }
+
+package:
+  patterns:
+    - "njila.db"
+    - "src/**"
+    - "handlers/**"
+
+# Deploy: npx serverless deploy  (ver AWS_DEPLOY.md)

@@ -1,0 +1,13 @@
+{
+  "name": "njila-backend",
+  "version": "1.0.0",
+  "description": "Backend serverless da Plataforma Njila - Node.js",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "deploy": "serverless deploy",
+    "remove": "serverless remove"
+  },
+  "engines": { "node": ">=20.0.0" },
+  "devDependencies": { "serverless": "^3.38.0" }
+}
