@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Info, MoreHorizontal } from "lucide-react";
+import { ArrowUpRight, Info, MoreHorizontal, X } from "lucide-react";
 import { Badge } from "../../design/ui/Badge";
 import { Button } from "../../design/ui/Button";
 import { IconTile } from "../../design/ui/IconTile";
@@ -19,6 +19,7 @@ import { MiniJornada } from "./MiniJornada";
 export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
   const { t } = useTranslation();
   const [menuAberto, setMenuAberto] = useState(false);
+  const [previewAberto, setPreviewAberto] = useState(false);
 
   const momento = getMomento(item.momento);
   const situacao = getSituacao(item.situacao);
@@ -81,6 +82,10 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
               {t(ACOES[primaria])}
             </Button>
           )}
+          <Button variant="ghost" size="sm" onClick={() => setPreviewAberto(true)}>
+            Ver detalhes
+          </Button>
+
           <div className="relative">
             <Button
               variant="ghost"
@@ -116,6 +121,87 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
           </div>
         </div>
       </div>
+
+      {previewAberto && (
+        <EmpresaPreview
+          item={item}
+          momento={momento}
+          situacao={situacao}
+          primaria={primaria}
+          onClose={() => setPreviewAberto(false)}
+          onVerFicha={() => onVerFicha(item.empresa_id)}
+          onAcao={() => onAcao(item.empresa_id, primaria, item.nome_empresa)}
+          t={t}
+        />
+      )}
     </article>
+  );
+}
+
+function EmpresaPreview({ item, momento, situacao, primaria, onClose, onVerFicha, onAcao, t }) {
+  return (
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-ink-950/35 p-4 backdrop-blur-[2px]" role="presentation">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`empresa-preview-${item.empresa_id}`}
+        className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl"
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-700">Prévia da empresa</p>
+            <h2 id={`empresa-preview-${item.empresa_id}`} className="mt-1 text-xl font-bold tracking-tight text-ink-900">
+              {item.nome_empresa}
+            </h2>
+            <p className="mt-1 text-sm text-ink-500">{item.segmento}</p>
+          </div>
+          <button
+            type="button"
+            aria-label="Fechar prévia"
+            onClick={onClose}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-ink-400 transition-colors hover:bg-surface-50 hover:text-ink-800"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <div className="mt-5 flex items-center justify-between rounded-xl bg-surface-50 p-4">
+          <div className="flex flex-wrap gap-2">
+            <Badge variant={momento.variante}>{t(momento.i18nKey)}</Badge>
+            <Badge variant={situacao.variante}>{t(situacao.i18nKey)}</Badge>
+          </div>
+          <PriorityRing score={item.score} size={56} />
+        </div>
+
+        {item.score_explicacao && (
+          <p className="mt-4 flex gap-2 text-sm leading-relaxed text-ink-600">
+            <Info size={15} className="mt-0.5 shrink-0 text-ink-400" />
+            {item.score_explicacao}
+          </p>
+        )}
+
+        <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+          <div className="rounded-lg bg-surface-50 p-3">
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-400">Último acesso</span>
+            <span className="mt-1 block font-semibold text-ink-800">{item.ultimo_acesso}</span>
+          </div>
+          <div className="rounded-lg bg-surface-50 p-3">
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-400">Próximo passo</span>
+            <span className="mt-1 block font-semibold text-ink-800">{item.acao_recomendada}</span>
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-end gap-2 border-t border-ink-100 pt-4">
+          <Button variant="ghost" size="sm" onClick={onVerFicha}>
+            Abrir ficha completa <ArrowUpRight size={14} />
+          </Button>
+          {primaria && (
+            <Button size="sm" onClick={onAcao}>
+              {t(ACOES[primaria])}
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
