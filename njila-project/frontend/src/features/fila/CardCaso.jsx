@@ -5,6 +5,7 @@ import { Badge } from "../../design/ui/Badge";
 import { Button } from "../../design/ui/Button";
 import { IconTile } from "../../design/ui/IconTile";
 import { PriorityRing } from "../../design/ui/PriorityRing";
+import { Tooltip } from "../../design/ui/Tooltip";
 import { cn } from "../../lib/cn";
 import { getMomento } from "../../domain/momentos";
 import { getSituacao } from "../../domain/situacao";
@@ -59,17 +60,21 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
       <div className="mt-5 rounded-xl bg-surface-50 px-3 py-3">
         <div className="mb-2 flex items-center justify-between">
           <span className="text-[10px] font-bold uppercase tracking-widest text-ink-400">Jornada</span>
-          <span className="text-[10px] font-medium text-ink-400">{item.dias_parado}d sem retorno</span>
         </div>
         <MiniJornada momento={item.momento} />
       </div>
 
-      {item.score_explicacao && (
-        <p className="mt-3 flex min-h-[32px] items-start gap-1.5 text-xs leading-relaxed text-ink-500">
-          <Info size={13} className="mt-0.5 shrink-0 text-ink-300" />
-          <span className="line-clamp-2">{item.score_explicacao}</span>
-        </p>
-      )}
+      <div className="mt-3 flex items-center justify-between">
+        {item.score_explicacao ? (
+          <Tooltip label={item.score_explicacao}>
+            <span className="inline-flex items-center gap-1 text-xs font-medium text-ink-400 hover:text-ink-700">
+              <Info size={13} />
+              Por que esta prioridade?
+            </span>
+          </Tooltip>
+        ) : <span />}
+        <span className="text-[11px] text-ink-400">{item.dias_parado}d sem retorno</span>
+      </div>
 
       <div className="mt-auto flex items-center justify-between gap-3 border-t border-ink-100 pt-4">
         <p className="min-w-0 truncate text-xs text-ink-500">
