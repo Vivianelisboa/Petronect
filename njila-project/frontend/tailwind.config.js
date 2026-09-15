@@ -1,4 +1,4 @@
-import { palette, shadows } from "./src/design/tokens.js";
+import { palette, portal, shadows } from "./src/design/tokens.js";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,6 +9,7 @@ export default {
         brand: palette.brand,
         ink: palette.ink,
         surface: palette.surface,
+        portal,
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],

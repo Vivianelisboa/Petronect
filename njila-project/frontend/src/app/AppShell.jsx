@@ -1,15 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "./Header";
+import { cn } from "../lib/cn";
 
-/** 
- * Superfície única de operação: marca, navegação e conteúdo trabalham
- * juntos sem transformar a Central em um painel administrativo genérico.
+/**
+ * Moldura da aplicação. O fundo muda por rota: a Visão analítica roda sobre o
+ * azul profundo do Portal (tema escuro); o restante da operação usa o fundo
+ * claro corporativo.
  */
 export function AppShell() {
+  const { pathname } = useLocation();
+  const escuro = pathname.startsWith("/analitico");
+
   return (
-    <div className="min-h-screen bg-surface-50">
+    <div className={cn("min-h-screen", escuro ? "portal-shell text-white" : "bg-surface-50")}>
       <Header />
-      <main className="mx-auto max-w-6xl px-6 py-8 lg:px-8">
+      <main className="mx-auto max-w-6xl px-6 py-8">
         <Outlet />
       </main>
     </div>

@@ -48,6 +48,19 @@ export const palette = {
 };
 
 /**
+ * Paleta do Portal do fornecedor — azul profundo + verde-lima, a experiência
+ * que o fornecedor vive no Portal Petronect. É mantida separada da paleta
+ * corporativa do Njila de propósito: o portal é a "rua", o painel é a "sala".
+ */
+export const portal = {
+  950: "#0D1B4C",
+  900: "#132466",
+  800: "#1C3184",
+  700: "#2A44A6",
+  lime: "#8DC63F",
+};
+
+/**
  * Cores semânticas de estado. Os componentes de UI expõem essas variantes
  * (ver design/ui/Badge.jsx) para que o domínio nunca precise conhecer
  * classes do Tailwind.
