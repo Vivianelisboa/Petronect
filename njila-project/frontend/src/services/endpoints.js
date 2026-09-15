@@ -11,12 +11,13 @@ import {
   ChatRespostaSchema,
 } from "./schemas";
 
-export async function buscarFilaHoje({ momento, limit } = {}) {
+export async function buscarFilaHoje({ momento, limit, data } = {}) {
   const params = new URLSearchParams();
   if (momento) params.set("momento", momento);
   if (limit) params.set("limit", limit);
-  const data = await apiFetch(`/fila-hoje?${params.toString()}`);
-  return FilaHojeSchema.parse(data);
+  if (data) params.set("data", data);
+  const resposta = await apiFetch(`/fila-hoje?${params.toString()}`);
+  return FilaHojeSchema.parse(resposta);
 }
 
 export async function buscarEmpresa(empresaId) {

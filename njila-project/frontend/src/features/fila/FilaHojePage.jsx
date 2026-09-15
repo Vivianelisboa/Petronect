@@ -26,12 +26,16 @@ export function FilaHojePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [momento, setMomento] = useState("");
+  const [dataReferencia, setDataReferencia] = useState(dataHoje());
   const [segmento, setSegmento] = useState("todos");
   const [overrides, setOverrides] = useState({});
   const [saindo, setSaindo] = useState([]);
   const [toasts, setToasts] = useState([]);
 
-  const { fila, carregando, erro, recarregar } = useFilaHoje({ momento: momento || undefined });
+  const { fila, carregando, erro, recarregar } = useFilaHoje({
+    momento: momento || undefined,
+    data: dataReferencia,
+  });
 
   const comOverride = fila.map((item) =>
     overrides[item.empresa_id] ? { ...item, situacao: overrides[item.empresa_id] } : item
@@ -93,6 +97,25 @@ export function FilaHojePage() {
 
   return (
     <section className="space-y-6">
+      <header className="flex flex-wrap items-end justify-between gap-5">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-brand-700">Central de Operações</p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-ink-900">
+            {t("central.saudacao", { nome: t("perfil.nome").split(" ")[0] })}
+          </h1>
+          <p className="mt-1 text-sm text-ink-500">{t("central.descricao")}</p>
+        </div>
+        <label className="flex items-center gap-3 text-right">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-ink-400">{t("central.data")}</span>
+          <input
+            type="date"
+            value={dataReferencia}
+            onChange={(e) => setDataReferencia(e.target.value)}
+            className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm font-medium text-ink-700 shadow-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+          />
+        </label>
+      </header>
+
       {/* Stats hero + filtros */}
       <div className="space-y-4">
         <ResumoFila
@@ -166,6 +189,14 @@ export function FilaHojePage() {
       <ToastStack toasts={toasts} />
     </section>
   );
+}
+
+function dataHoje() {
+  const agora = new Date();
+  const ano = agora.getFullYear();
+  const mes = String(agora.getMonth() + 1).padStart(2, "0");
+  const dia = String(agora.getDate()).padStart(2, "0");
+  return `${ano}-${mes}-${dia}`;
 }
 
 function RowSkeleton() {

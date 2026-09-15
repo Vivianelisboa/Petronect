@@ -5,13 +5,18 @@
     "audiencia": "Marketing & Atendimento"
   },
   "perfil": {
-    "nome": "Marina Costa",
+    "nome": "Mariana Costa",
     "papel": "Marketing & Atendimento",
-    "email": "marina.costa@petronect.com.br",
+    "email": "mariana.costa@petronect.com.br",
     "notificacoes": "Abrir notificações",
     "conta": "Minha conta",
     "preferencias": "Preferências",
     "sair": "Encerrar sessão"
+  },
+  "central": {
+    "saudacao": "Olá, {{nome}}.",
+    "descricao": "Aqui está o panorama da operação para você decidir o próximo movimento.",
+    "data": "Dia da operação"
   },
   "nav": {
     "menu": "Menu",

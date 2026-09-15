@@ -11,7 +11,41 @@ const DB_PATH = process.env.NJILA_DB_PATH || path.join(__dirname, "..", "njila.d
 
 let db;
 function getDb() {
-  if (!db) db = new DatabaseSync(DB_PATH);
+  if (!db) {
+    db = new DatabaseSync(DB_PATH);
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS classificacao_historico (
+        empresa_id TEXT NOT NULL,
+        data_operacao TEXT NOT NULL,
+        momento TEXT NOT NULL,
+        score INTEGER,
+        score_explicacao TEXT,
+        dias_parado INTEGER,
+        oportunidade_relacionada TEXT,
+        n_repeticoes_oportunidade INTEGER,
+        acao_recomendada TEXT,
+        ultimo_acesso TEXT,
+        atualizado_em TEXT,
+        PRIMARY KEY (empresa_id, data_operacao)
+      );
+      INSERT OR IGNORE INTO classificacao_historico
+        (empresa_id, data_operacao, momento, score, score_explicacao, dias_parado,
+         oportunidade_relacionada, n_repeticoes_oportunidade, acao_recomendada,
+         ultimo_acesso, atualizado_em)
+      SELECT empresa_id, substr(atualizado_em, 1, 10), momento, score, score_explicacao,
+             dias_parado, oportunidade_relacionada, n_repeticoes_oportunidade,
+             acao_recomendada, ultimo_acesso, atualizado_em
+      FROM classificacao;
+      INSERT OR IGNORE INTO classificacao_historico
+        (empresa_id, data_operacao, momento, score, score_explicacao, dias_parado,
+         oportunidade_relacionada, n_repeticoes_oportunidade, acao_recomendada,
+         ultimo_acesso, atualizado_em)
+      SELECT empresa_id, date('now'), momento, score, score_explicacao, dias_parado,
+             oportunidade_relacionada, n_repeticoes_oportunidade, acao_recomendada,
+             ultimo_acesso, atualizado_em
+      FROM classificacao;
+    `);
+  }
   return db;
 }
 
@@ -28,8 +62,9 @@ function derivarSituacao({ ultima_acao, ultima_concluiu }) {
 }
 
 /** Fila de Hoje: empresas que precisam de atenção, ordenadas por score. */
-function getFilaHoje({ momento, limit } = {}) {
+function getFilaHoje({ momento, limit, data } = {}) {
   const conn = getDb();
+  const fonte = data ? "classificacao_historico" : "classificacao";
   let sql = `
     SELECT c.empresa_id, e.nome_empresa, e.segmento, c.momento, c.score,
            c.score_explicacao, c.dias_parado, c.ultimo_acesso,
@@ -40,11 +75,15 @@ function getFilaHoje({ momento, limit } = {}) {
            (SELECT a.empresa_concluiu FROM acoes_registradas a
              WHERE a.empresa_id = c.empresa_id
              ORDER BY a.registrado_em DESC, a.acao_id DESC LIMIT 1) AS ultima_concluiu
-    FROM classificacao c
+     FROM ${fonte} c
     JOIN empresas e ON e.empresa_id = c.empresa_id
     WHERE c.momento != 'jornada_concluida'
   `;
   const params = [];
+  if (data) {
+    sql += " AND c.data_operacao = ?";
+    params.push(data);
+  }
   if (momento) {
     sql += " AND c.momento = ?";
     params.push(momento);
