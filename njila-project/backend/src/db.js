@@ -44,9 +44,45 @@ function getDb() {
              oportunidade_relacionada, n_repeticoes_oportunidade, acao_recomendada,
              ultimo_acesso, atualizado_em
       FROM classificacao;
+
+      CREATE TABLE IF NOT EXISTS eventos_acesso (
+        event_id TEXT PRIMARY KEY,
+        anonymous_id TEXT NOT NULL,
+        empresa_id TEXT,
+        nome TEXT NOT NULL,
+        caminho TEXT NOT NULL,
+        ocorrido_em TEXT NOT NULL,
+        consentimento INTEGER NOT NULL DEFAULT 1,
+        recebido_em TEXT NOT NULL,
+        expira_em TEXT
+      );
     `);
   }
   return db;
+}
+
+/**
+ * Eventos de acesso consentidos (ingestão). Guarda apenas metadados de
+ * navegação — nunca senha, token, proposta, documento ou dado pessoal.
+ * `expira_em` materializa a retenção limitada (LGPD, 90 dias).
+ */
+function registrarEventoAcesso({ event_id, anonymous_id, empresa_id, nome, caminho, ocorrido_em }) {
+  const conn = getDb();
+  const recebidoEm = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const expiraEm = new Date(new Date(ocorrido_em).getTime() + 90 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " ");
+
+  conn
+    .prepare(
+      `INSERT OR IGNORE INTO eventos_acesso
+         (event_id, anonymous_id, empresa_id, nome, caminho, ocorrido_em, consentimento, recebido_em, expira_em)
+       VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)`
+    )
+    .run(event_id, anonymous_id, empresa_id || null, nome, caminho, ocorrido_em, recebidoEm, expiraEm);
+
+  return { event_id, nome, caminho, ocorrido_em, recebido_em: recebidoEm, expira_em: expiraEm };
 }
 
 /**
@@ -126,9 +162,17 @@ function getEmpresa(empresaId) {
     ...new Set(timeline.map((t) => t.oportunidade_id).filter(Boolean)),
   ];
 
+  // A situação operacional também vale para a ficha — derivada da última ação.
+  const ultima = historico_acoes[0];
+  const situacao = derivarSituacao({
+    ultima_acao: ultima?.tipo_acao,
+    ultima_concluiu: ultima?.empresa_concluiu,
+  });
+
   return {
     ...empresa,
     classificacao,
+    situacao,
     timeline,
     historico_acoes,
     paginas_acessadas,
@@ -189,10 +233,80 @@ function getEmpresaComClassificacao(empresaId) {
   return { empresa, classificacao };
 }
 
+/**
+ * Indicadores do painel analítico. Para o gráfico não ficar vazio caso o seed
+ * tenha datas antigas, a janela do período é ancorada no último dia com
+ * evento (referência), e não em "hoje".
+ */
+function getIndicadores({ periodo } = {}) {
+  const conn = getDb();
+  const dias = [7, 30, 90].includes(Number(periodo)) ? Number(periodo) : 30;
+
+  const referencia = conn
+    .prepare("SELECT COALESCE(MAX(date(timestamp)), date('now')) AS d FROM eventos")
+    .get().d;
+  const inicio = conn.prepare("SELECT date(?, ?) AS d").get(referencia, `-${dias} days`).d;
+
+  const kpis = {
+    empresas: conn.prepare("SELECT COUNT(*) AS n FROM empresas").get().n,
+    eventos: conn
+      .prepare("SELECT COUNT(*) AS n FROM eventos WHERE date(timestamp) >= ?")
+      .get(inicio).n,
+    criticos: conn.prepare("SELECT COUNT(*) AS n FROM classificacao WHERE score >= 80").get().n,
+    intervencoes: conn
+      .prepare("SELECT COUNT(*) AS n FROM acoes_registradas WHERE date(registrado_em) >= ?")
+      .get(inicio).n,
+  };
+
+  const serie = conn
+    .prepare(
+      `SELECT date(timestamp) AS dia, COUNT(*) AS total
+       FROM eventos
+       WHERE date(timestamp) >= ?
+       GROUP BY dia
+       ORDER BY dia`
+    )
+    .all(inicio);
+
+  const areas = conn
+    .prepare(
+      `SELECT pagina AS area, COUNT(*) AS total
+       FROM eventos
+       WHERE date(timestamp) >= ?
+       GROUP BY pagina
+       ORDER BY total DESC`
+    )
+    .all(inicio);
+
+  const momentos = conn
+    .prepare(
+      `SELECT momento, COUNT(*) AS total
+       FROM classificacao
+       WHERE momento != 'jornada_concluida'
+       GROUP BY momento
+       ORDER BY total DESC`
+    )
+    .all();
+
+  const recentes = conn
+    .prepare(
+      `SELECT e.timestamp, e.acao, e.pagina, em.nome_empresa
+       FROM eventos e
+       JOIN empresas em ON em.empresa_id = e.empresa_id
+       ORDER BY e.timestamp DESC
+       LIMIT 6`
+    )
+    .all();
+
+  return { periodo: dias, inicio, referencia, kpis, serie, areas, momentos, recentes };
+}
+
 module.exports = {
   getFilaHoje,
   getEmpresa,
   registrarAcao,
   getResumo,
   getEmpresaComClassificacao,
+  registrarEventoAcesso,
+  getIndicadores,
 };
