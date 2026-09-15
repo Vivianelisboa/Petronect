@@ -9,6 +9,7 @@ import { MOMENTOS_FILTRAVEIS, getMomento } from "../../domain/momentos";
 import { Button } from "../../design/ui/Button";
 import { EmptyState } from "../../design/ui/EmptyState";
 import { Select } from "../../design/ui/Select";
+import { SearchField } from "../../design/ui/SearchField";
 import { Skeleton } from "../../design/ui/Skeleton";
 import { ToastStack } from "../../design/ui/ToastStack";
 import { CardCaso } from "./CardCaso";
@@ -27,6 +28,7 @@ export function FilaHojePage() {
   const navigate = useNavigate();
   const [momento, setMomento] = useState("");
   const [dataReferencia, setDataReferencia] = useState(dataHoje());
+  const [busca, setBusca] = useState("");
   const [segmento, setSegmento] = useState("todos");
   const [overrides, setOverrides] = useState({});
   const [saindo, setSaindo] = useState([]);
@@ -50,6 +52,15 @@ export function FilaHojePage() {
   };
 
   const filtrada = comOverride.filter((item) => {
+    const termo = busca.trim().toLocaleLowerCase();
+    const correspondeBusca = !termo || [
+      item.nome_empresa,
+      item.segmento,
+      item.momento,
+      item.acao_recomendada,
+    ].some((valor) => String(valor || "").toLocaleLowerCase().includes(termo));
+
+    if (!correspondeBusca) return false;
     if (segmento === "todos") return true;
     if (segmento === "criticos") return item.score >= 80;
     return item.situacao === segmento;
@@ -105,15 +116,23 @@ export function FilaHojePage() {
           </h1>
           <p className="mt-1 text-sm text-ink-500">{t("central.descricao")}</p>
         </div>
-        <label className="flex items-center gap-3 text-right">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-ink-400">{t("central.data")}</span>
-          <input
-            type="date"
-            value={dataReferencia}
-            onChange={(e) => setDataReferencia(e.target.value)}
-            className="rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm font-medium text-ink-700 shadow-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+        <div className="flex w-full flex-wrap items-end justify-end gap-3 sm:w-auto">
+          <SearchField
+            value={busca}
+            onChange={setBusca}
+            placeholder={t("central.buscar")}
+            className="w-full sm:w-64"
           />
-        </label>
+          <label className="flex items-center gap-3 text-right">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-ink-400">{t("central.data")}</span>
+            <input
+              type="date"
+              value={dataReferencia}
+              onChange={(e) => setDataReferencia(e.target.value)}
+              className="h-10 rounded-lg border border-ink-200 bg-white px-3 text-sm font-medium text-ink-700 shadow-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+            />
+          </label>
+        </div>
       </header>
 
       {/* Stats hero + filtros */}

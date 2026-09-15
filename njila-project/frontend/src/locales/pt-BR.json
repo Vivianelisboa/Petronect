@@ -16,7 +16,8 @@
   "central": {
     "saudacao": "Olá, {{nome}}.",
     "descricao": "Aqui está o panorama da operação para você decidir o próximo movimento.",
-    "data": "Dia da operação"
+    "data": "Dia da operação",
+    "buscar": "Buscar empresa, segmento ou ação"
   },
   "nav": {
     "menu": "Menu",
