@@ -65,15 +65,23 @@
     "sem_acoes": "Nenhuma ação registrada ainda."
   },
   "assistente": {
-    "banner_demonstracao": "Modo demonstração — visão do fornecedor no Portal",
+    "banner_demonstracao": "Simulação — Paola no Portal do fornecedor",
+    "paola_nome": "Paola",
+    "paola_papel_ia": "Assistente virtual",
+    "paola_papel_humano": "Atendimento",
     "selecionar_empresa": "Simular login de qual empresa?",
     "selecione": "Selecione uma empresa...",
     "selecione_titulo": "Escolha uma empresa",
-    "selecione_descricao": "Selecione acima para ver o card que o fornecedor receberia no Portal.",
+    "selecione_descricao": "Selecione acima para ver como a Paola aparece para o fornecedor, a partir do gatilho de jornada do Njila.",
     "sem_alerta": "Nenhum alerta no momento — jornada concluída para esta empresa.",
-    "chat_titulo": "Converse com o Assistente",
-    "chat_vazio": "Faça uma pergunta para começar.",
+    "porque": "Por que estou vendo isto?",
+    "porque_explicacao": "Identificamos este momento na sua jornada no Portal:",
+    "handoff_divisor": "Você está falando com o Atendimento",
+    "handoff_mensagem": "Vou te passar para um atendente, que já recebe o contexto da sua empresa.",
+    "confirmacao": "Certo! Já registrei sua escolha.",
+    "dispensado": "Sem problemas. Se precisar, é só chamar.",
     "chat_placeholder": "Digite sua dúvida...",
+    "chat_placeholder_humano": "Fale com o atendente...",
     "chat_enviar": "Enviar"
   }
 }

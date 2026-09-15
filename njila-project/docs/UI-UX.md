@@ -99,7 +99,40 @@ alcançada a partir da Fila, com "← Fila de Hoje".
 
 ---
 
-## 6. Lacunas vs. MVP
+## 6. Diferenciação — Njila e a Paola
+
+A Paola **já é uma assistente virtual**: sabe quem é o fornecedor (está logado)
+e puxa a conversa sozinha quando percebe algo inacabado (*"Vi que você não
+terminou sua cotação, quer que eu finalize?"*). Ou seja, a evolução
+**sob demanda → proativo já aconteceu**; proatividade, contexto e
+identificação **não são** o diferencial do Njila.
+
+O que a Paola não faz, e o Njila faz:
+
+| | **Paola** | **Njila** |
+|---|---|---|
+| Relação | 1 fornecedor : 1 conversa | 1 equipe : **toda a carteira** |
+| Foco | quem está ali, agora | quem **deveria** ser atendido, e por quê |
+| Duração | a sessão | **histórico durável** entre sessões |
+| Saída | fornecedor destrava | equipe prioriza, age e **mede** |
+
+O Njila é **de onde a proatividade vem**: formaliza a percepção (o "esqueceu
+algo") como classificação de momento por regra explicável, decide se/por que
+interromper, registra o resultado e mostra a carteira agregada. A Paola
+continua sendo a **voz**; o Njila é o **sinal + registro + visão agregada**.
+
+### As duas frentes (MVP), integradas
+1. **Assistente proativo** — a Paola, dirigida pelos gatilhos de jornada do Njila.
+2. **Painel operacional** — Fila + Ficha; o que só o Njila faz.
+
+### No protótipo
+A tela do assistente **simula a Paola integrada**: recebe o gatilho do Njila,
+mostra o "por que estou vendo isto", conversa e faz **handoff** para o
+Atendimento humano. Não existe um segundo chat do Njila.
+
+---
+
+## 7. Lacunas vs. MVP
 
 | MVP pede | Estado |
 |---|---|
@@ -112,7 +145,7 @@ alcançada a partir da Fila, com "← Fila de Hoje".
 
 ---
 
-## 7. Log de decisões
+## 8. Log de decisões
 
 | Decisão | Escolha |
 |---|---|
@@ -123,3 +156,5 @@ alcançada a partir da Fila, com "← Fila de Hoje".
 | Estado operacional | **Situação** (derivada do histórico, sem migração) |
 | Rótulo do número | **Prioridade** |
 | Navegação | 2 destinos; Ficha como detalhe |
+| Argumento de valor | **duas frentes**: assistente proativo (Paola) + painel operacional |
+| Tela do assistente | simula a **Paola integrada**; sem chat próprio do Njila |
