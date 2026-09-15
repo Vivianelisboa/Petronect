@@ -1,11 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Bot, Building2, ListTodo } from "lucide-react";
+import { Bot, ListTodo } from "lucide-react";
 import { cn } from "../lib/cn";
 
 const ITENS = [
   { to: "/", chave: "nav.fila", Icone: ListTodo, end: true },
-  { to: "/empresa", chave: "nav.ficha", Icone: Building2, end: false },
   { to: "/assistente", chave: "nav.assistente", Icone: Bot, end: false },
 ];
 

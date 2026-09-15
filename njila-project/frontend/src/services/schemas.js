@@ -17,6 +17,7 @@ export const ItemFilaSchema = z.object({
   ultimo_acesso: z.string(),
   acao_recomendada: z.string(),
   oportunidade_relacionada: z.string().nullable().optional(),
+  situacao: z.string(),
 });
 
 export const FilaHojeSchema = z.object({

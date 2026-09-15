@@ -2,10 +2,11 @@ import { useTranslation } from "react-i18next";
 import { Eye, GraduationCap } from "lucide-react";
 import { Badge } from "../../design/ui/Badge";
 import { Button } from "../../design/ui/Button";
-import { ScorePill } from "../../design/ui/ScorePill";
+import { PriorityBadge } from "../../design/ui/PriorityBadge";
 import { getMomento } from "../../domain/momentos";
+import { getSituacao } from "../../domain/situacao";
 
-/** Tabela da Fila de Hoje, ordenada por score (o backend já entrega ordenado). */
+/** Tabela da Fila de Hoje, ordenada por prioridade (o backend já entrega ordenado). */
 export function FilaTable({ fila, onVerFicha, onAcaoRapida }) {
   const { t } = useTranslation();
 
@@ -16,14 +17,16 @@ export function FilaTable({ fila, onVerFicha, onAcaoRapida }) {
           <tr>
             <th className="px-4 py-3 font-medium">{t("fila.coluna_empresa")}</th>
             <th className="px-4 py-3 font-medium">{t("fila.coluna_momento")}</th>
-            <th className="px-4 py-3 font-medium">{t("fila.coluna_score")}</th>
-            <th className="px-4 py-3 font-medium">{t("fila.coluna_acao")}</th>
+            <th className="px-4 py-3 font-medium">{t("fila.coluna_prioridade")}</th>
+            <th className="px-4 py-3 font-medium">{t("fila.coluna_situacao")}</th>
+            <th className="px-4 py-3 font-medium">{t("fila.coluna_proximo_passo")}</th>
             <th className="px-4 py-3" />
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
           {fila.map((item) => {
             const momento = getMomento(item.momento);
+            const situacao = getSituacao(item.situacao);
             return (
               <tr key={item.empresa_id} className="hover:bg-slate-50">
                 <td className="px-4 py-3">
@@ -36,8 +39,13 @@ export function FilaTable({ fila, onVerFicha, onAcaoRapida }) {
                   </Badge>
                 </td>
                 <td className="px-4 py-3">
-                  <ScorePill score={item.score} />
+                  <PriorityBadge score={item.score} />
                   <p className="mt-1 max-w-xs text-xs text-slate-500">{item.score_explicacao}</p>
+                </td>
+                <td className="px-4 py-3">
+                  <Badge variant={situacao.variante}>
+                    {situacao.i18nKey ? t(situacao.i18nKey) : item.situacao}
+                  </Badge>
                 </td>
                 <td className="px-4 py-3 text-slate-600">{item.acao_recomendada}</td>
                 <td className="px-4 py-3">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Bot } from "lucide-react";
+import { Bot, MonitorPlay } from "lucide-react";
 import { useFilaHoje } from "../../hooks/useFilaHoje";
 import { useAssistente } from "../../hooks/useAssistente";
 import { registrarAcao } from "../../services/endpoints";
@@ -33,6 +33,11 @@ export function AssistentePage() {
 
   return (
     <section className="mx-auto max-w-xl p-6">
+      <div className="mb-4 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+        <MonitorPlay size={14} />
+        {t("assistente.banner_demonstracao")}
+      </div>
+
       <label className="mb-1 block text-sm font-medium text-slate-600">
         {t("assistente.selecionar_empresa")}
       </label>

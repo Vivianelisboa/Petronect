@@ -15,13 +15,31 @@ function getDb() {
   return db;
 }
 
+/**
+ * Deriva a "situação" operacional do caso a partir do histórico de ações.
+ * Não há coluna de status no banco — o estado é consequência do que já foi
+ * registrado, então nenhuma migração é necessária.
+ */
+function derivarSituacao({ ultima_acao, ultima_concluiu }) {
+  if (!ultima_acao) return "pendente";
+  if (ultima_concluiu === 1 || ultima_acao === "marcar_resolvido") return "resolvido";
+  if (ultima_acao === "adiar") return "adiado";
+  return "em_atendimento";
+}
+
 /** Fila de Hoje: empresas que precisam de atenção, ordenadas por score. */
 function getFilaHoje({ momento, limit } = {}) {
   const conn = getDb();
   let sql = `
     SELECT c.empresa_id, e.nome_empresa, e.segmento, c.momento, c.score,
            c.score_explicacao, c.dias_parado, c.ultimo_acesso,
-           c.acao_recomendada, c.oportunidade_relacionada
+           c.acao_recomendada, c.oportunidade_relacionada,
+           (SELECT a.tipo_acao FROM acoes_registradas a
+             WHERE a.empresa_id = c.empresa_id
+             ORDER BY a.registrado_em DESC, a.acao_id DESC LIMIT 1) AS ultima_acao,
+           (SELECT a.empresa_concluiu FROM acoes_registradas a
+             WHERE a.empresa_id = c.empresa_id
+             ORDER BY a.registrado_em DESC, a.acao_id DESC LIMIT 1) AS ultima_concluiu
     FROM classificacao c
     JOIN empresas e ON e.empresa_id = c.empresa_id
     WHERE c.momento != 'jornada_concluida'
@@ -36,7 +54,10 @@ function getFilaHoje({ momento, limit } = {}) {
     sql += " LIMIT ?";
     params.push(Number(limit));
   }
-  return conn.prepare(sql).all(...params);
+  return conn
+    .prepare(sql)
+    .all(...params)
+    .map((linha) => ({ ...linha, situacao: derivarSituacao(linha) }));
 }
 
 /** Ficha da empresa: dados + momento atual + linha do tempo completa + histórico de ações. */

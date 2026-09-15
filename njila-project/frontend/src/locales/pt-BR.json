@@ -4,7 +4,6 @@
   },
   "nav": {
     "fila": "Fila de Hoje",
-    "ficha": "Ficha da Empresa",
     "assistente": "Assistente"
   },
   "comum": {
@@ -12,6 +11,19 @@
     "ver_ficha": "Ver ficha",
     "pagina_nao_encontrada": "Página não encontrada",
     "voltar_para_fila": "Volte para a Fila de Hoje pelo menu acima."
+  },
+  "prioridade": {
+    "rotulo": "Prioridade",
+    "critico": "Crítico",
+    "atencao": "Atenção",
+    "acompanhar": "Acompanhar",
+    "estavel": "Estável"
+  },
+  "situacao": {
+    "pendente": "Pendente",
+    "em_atendimento": "Em atendimento",
+    "adiado": "Adiado",
+    "resolvido": "Resolvido"
   },
   "momento": {
     "chegou_perdeu": "Chegou e se perdeu",
@@ -25,23 +37,26 @@
     "enviar_mensagem": "Enviar mensagem",
     "enviar_tutorial": "Enviar tutorial",
     "encaminhar_atendimento": "Encaminhar ao Atendimento",
-    "marcar_resolvido": "Marcar como resolvido"
+    "marcar_resolvido": "Marcar como resolvido",
+    "adiar": "Adiar ação"
   },
   "fila": {
     "titulo": "Empresas que precisam de atenção",
+    "subtitulo": "Quem precisa de atenção hoje",
     "filtrar_por_momento": "Filtrar por momento",
     "todos_momentos": "Todos os momentos",
     "coluna_empresa": "Empresa",
     "coluna_momento": "Momento",
-    "coluna_score": "Score",
-    "coluna_acao": "Ação recomendada",
+    "coluna_prioridade": "Prioridade",
+    "coluna_situacao": "Situação",
+    "coluna_proximo_passo": "Próximo passo",
     "enviar_tutorial": "Enviar tutorial",
     "mensagem_tutorial_automatico": "Tutorial enviado automaticamente.",
     "vazia_titulo": "Nada por aqui",
     "vazia_descricao": "Nenhuma empresa pendente neste filtro."
   },
   "ficha": {
-    "voltar": "Voltar para a Fila",
+    "voltar": "Fila de Hoje",
     "selecione": "Selecione uma empresa na Fila de Hoje.",
     "nao_encontrada": "Empresa não encontrada.",
     "linha_do_tempo": "Linha do tempo da jornada",
@@ -50,7 +65,8 @@
     "sem_acoes": "Nenhuma ação registrada ainda."
   },
   "assistente": {
-    "selecionar_empresa": "Simular login de qual empresa? (visão do fornecedor no Portal)",
+    "banner_demonstracao": "Modo demonstração — visão do fornecedor no Portal",
+    "selecionar_empresa": "Simular login de qual empresa?",
     "selecione": "Selecione uma empresa...",
     "selecione_titulo": "Escolha uma empresa",
     "selecione_descricao": "Selecione acima para ver o card que o fornecedor receberia no Portal.",
