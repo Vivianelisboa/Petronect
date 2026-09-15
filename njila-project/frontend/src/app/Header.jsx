@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
-import { ListTodo, MessagesSquare } from "lucide-react";
+import { Bell, ChevronDown, ListTodo, LogOut, MessagesSquare, Settings, UserRound } from "lucide-react";
 import { cn } from "../lib/cn";
 
 /**
@@ -8,6 +9,7 @@ import { cn } from "../lib/cn";
  */
 export function Header() {
   const { t } = useTranslation();
+  const [perfilAberto, setPerfilAberto] = useState(false);
 
   return (
     <header className="border-b border-ink-200 bg-white">
@@ -24,11 +26,66 @@ export function Header() {
             <HeaderLink to="/assistente" icon={MessagesSquare} label={t("nav.assistente")} />
           </nav>
         </div>
-        <span className="hidden text-[11px] font-semibold uppercase tracking-widest text-ink-400 md:block">
-          {t("app.audiencia")}
-        </span>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            aria-label={t("perfil.notificacoes")}
+            className="relative flex h-9 w-9 items-center justify-center rounded-lg text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-800"
+          >
+            <Bell size={18} />
+            <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-brand-500 ring-2 ring-white" />
+          </button>
+
+          <div className="relative">
+            <button
+              type="button"
+              aria-expanded={perfilAberto}
+              onClick={() => setPerfilAberto((aberto) => !aberto)}
+              className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-left transition-colors hover:bg-ink-50"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-800">
+                MC
+              </span>
+              <span className="hidden leading-tight sm:block">
+                <span className="block text-xs font-semibold text-ink-800">{t("perfil.nome")}</span>
+                <span className="block text-[10px] text-ink-400">{t("perfil.papel")}</span>
+              </span>
+              <ChevronDown size={15} className="text-ink-400" />
+            </button>
+
+            {perfilAberto && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setPerfilAberto(false)} />
+                <div className="absolute right-0 top-full z-20 mt-2 w-56 overflow-hidden rounded-xl border border-ink-100 bg-white py-1 shadow-lg">
+                  <div className="border-b border-ink-100 px-4 py-3">
+                    <p className="text-xs font-semibold text-ink-800">{t("perfil.nome")}</p>
+                    <p className="mt-0.5 text-[11px] text-ink-400">{t("perfil.email")}</p>
+                  </div>
+                  <ProfileAction icon={UserRound} label={t("perfil.conta")} />
+                  <ProfileAction icon={Settings} label={t("perfil.preferencias")} />
+                  <ProfileAction icon={LogOut} label={t("perfil.sair")} danger />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </header>
+  );
+}
+
+function ProfileAction({ icon: Icon, label, danger = false }) {
+  return (
+    <button
+      type="button"
+      className={cn(
+        "flex w-full items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-surface-50",
+        danger ? "text-red-600" : "text-ink-600"
+      )}
+    >
+      <Icon size={15} />
+      {label}
+    </button>
   );
 }
 

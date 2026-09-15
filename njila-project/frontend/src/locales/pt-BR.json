@@ -4,6 +4,15 @@
     "tagline": "o caminho do fornecedor",
     "audiencia": "Marketing & Atendimento"
   },
+  "perfil": {
+    "nome": "Marina Costa",
+    "papel": "Marketing & Atendimento",
+    "email": "marina.costa@petronect.com.br",
+    "notificacoes": "Abrir notificações",
+    "conta": "Minha conta",
+    "preferencias": "Preferências",
+    "sair": "Encerrar sessão"
+  },
   "nav": {
     "menu": "Menu",
     "fila": "Central de Operações",
