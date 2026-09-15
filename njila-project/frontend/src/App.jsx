@@ -1,50 +1,49 @@
-import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import FilaHoje from "./components/FilaHoje";
-import FichaEmpresa from "./components/FichaEmpresa";
-import AssistenteWidget from "./components/AssistenteWidget";
+import { Building2, Compass } from "lucide-react";
+import { AppShell } from "./app/AppShell";
+import { EmptyState } from "./design/ui/EmptyState";
+import { FilaHojePage } from "./features/fila/FilaHojePage";
+import { FichaEmpresaPage } from "./features/ficha/FichaEmpresaPage";
+import { AssistentePage } from "./features/assistente/AssistentePage";
 
+/**
+ * Mapa de rotas. O `AppShell` é o layout compartilhado; cada rota preenche
+ * o `<Outlet />` dele. `/empresa` sem id mostra um estado vazio explicando
+ * como chegar numa ficha.
+ */
 export default function App() {
-  const { t } = useTranslation();
-  const [aba, setAba] = useState("fila");
-  const [empresaSelecionada, setEmpresaSelecionada] = useState(null);
-
-  function abrirFicha(empresaId) {
-    setEmpresaSelecionada(empresaId);
-    setAba("ficha");
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b px-6 py-4 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-njila-green" />
-        <h1 className="text-lg font-bold text-njila-blue">{t("app_title")}</h1>
-      </header>
+    <Routes>
+      <Route element={<AppShell />}>
+        <Route index element={<FilaHojePage />} />
+        <Route path="empresa" element={<SemEmpresa />} />
+        <Route path="empresa/:empresaId" element={<FichaEmpresaPage />} />
+        <Route path="assistente" element={<AssistentePage />} />
+        <Route path="*" element={<NaoEncontrada />} />
+      </Route>
+    </Routes>
+  );
+}
 
-      <nav className="bg-white border-b px-6 flex gap-6 text-sm">
-        <AbaBotao ativo={aba === "fila"} onClick={() => setAba("fila")} label={t("tab_fila")} />
-        <AbaBotao ativo={aba === "ficha"} onClick={() => setAba("ficha")} label={t("tab_ficha")} />
-        <AbaBotao ativo={aba === "assistente"} onClick={() => setAba("assistente")} label={t("tab_assistente")} />
-      </nav>
-
-      <main>
-        {aba === "fila" && <FilaHoje onSelecionarEmpresa={abrirFicha} />}
-        {aba === "ficha" && <FichaEmpresa empresaId={empresaSelecionada} />}
-        {aba === "assistente" && <AssistenteWidget />}
-      </main>
+function SemEmpresa() {
+  const { t } = useTranslation();
+  return (
+    <div className="p-6">
+      <EmptyState icon={Building2} title={t("ficha.selecione")} />
     </div>
   );
 }
 
-function AbaBotao({ ativo, onClick, label }) {
+function NaoEncontrada() {
+  const { t } = useTranslation();
   return (
-    <button
-      onClick={onClick}
-      className={`py-3 border-b-2 ${
-        ativo ? "border-njila-green text-njila-green font-medium" : "border-transparent text-gray-500"
-      }`}
-    >
-      {label}
-    </button>
+    <div className="p-6">
+      <EmptyState
+        icon={Compass}
+        title={t("comum.pagina_nao_encontrada")}
+        description={t("comum.voltar_para_fila")}
+      />
+    </div>
   );
 }

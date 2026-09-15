@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  @apply bg-slate-50 text-ink-900 antialiased;
 }
