@@ -8,8 +8,9 @@ informação).
 Referências de design: **Brevo** (estrutura SaaS), **Ruul** (minimalismo
 editorial) e **tbh / Studiovoilà** (calor humano).
 
-> **Pendência:** a **logo** define o acento de marca e a tipografia. Até ela
-> chegar, `brand` (verde) é provisório.
+> **Identidade:** fonte **Garet** (Book para corpo, Heavy para títulos) e logo
+> *"portal njila"* — wordmark preta em caixa baixa, renderizada como texto.
+> O **acento de marca** ainda está em aberto (hoje, verde provisório).
 
 ---
 
@@ -32,7 +33,7 @@ editorial) e **tbh / Studiovoilà** (calor humano).
 | Base neutra | branco / slate (fundo); grafite para texto | Ruul |
 | Acento de marca | **1 cor** (definida pela logo) — usada só em ação/estado | Ruul |
 | Status | semânticos: neutro · info · atenção · crítico · sucesso | já implementado |
-| Tipografia | sans, títulos pesados; **números tabulares** em dados | Ruul + dados |
+| Tipografia | **Garet** — Book (corpo) e Heavy (títulos); números tabulares em dados | identidade + Ruul |
 | Escala de espaço | múltiplos de 4; generoso no respiro, contido na densidade | Brevo |
 | Forma | cantos arredondados médios; cards com sombra suave | Brevo |
 | Movimento | **snap** (instantâneo); nada que atrase a leitura | Linear/Vercel |
@@ -151,7 +152,9 @@ Fonte única: `frontend/src/design/tokens.js` (o Tailwind importa daqui).
 
 ## 8. Pendências
 
-- [ ] **Logo** → define acento de marca e tipografia.
+- [x] **Logo** — wordmark "portal njila" (texto em Garet).
+- [x] **Fonte** — Garet Book/Heavy embutida (`src/assets/fonts`).
+- [ ] **Acento de marca** — definir (hoje verde provisório).
 - [ ] Ações tipadas no backend (ação/ajuda/handoff/dispensar).
 - [ ] Supressão ("Agora não" persistente).
 - [ ] Direção da prioridade (↑/↓) — requer histórico de score.

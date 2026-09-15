@@ -10,7 +10,7 @@ export default {
         ink: palette.ink,
       },
       fontFamily: {
-        sans: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+        sans: ["Garet", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
       },
       boxShadow: {
         card: shadows.card,
