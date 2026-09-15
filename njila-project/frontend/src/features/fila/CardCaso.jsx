@@ -35,8 +35,8 @@ export function CardCaso({ item, saindo = false, onVerFicha, onAcao }) {
       <article
         title={detalhes}
         className={cn(
-        "group flex min-h-[252px] flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-100/80 transition-all duration-200",
-        "hover:-translate-y-0.5 hover:shadow-lg hover:ring-ink-200",
+        "group relative flex min-h-[252px] flex-col rounded-2xl bg-white p-5 shadow-sm ring-1 ring-ink-100/80 transition-all duration-200",
+        "hover:z-20 hover:-translate-y-0.5 hover:shadow-lg hover:ring-ink-200 focus-within:z-20",
         saindo && "scale-[0.98] opacity-0"
         )}
       >
