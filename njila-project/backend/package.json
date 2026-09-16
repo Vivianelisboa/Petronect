@@ -4,10 +4,15 @@
   "description": "Backend serverless da Plataforma Njila - Node.js",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "node server.js",
     "deploy": "serverless deploy",
     "remove": "serverless remove"
   },
-  "engines": { "node": ">=20.0.0" },
-  "devDependencies": { "serverless": "^3.38.0" }
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "serverless": "^3.38.0"
+  }
 }
