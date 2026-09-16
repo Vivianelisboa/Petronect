@@ -6,11 +6,12 @@ da jornada descritos no documento do MVP, calcula o Score de prioridade
 """
 import sqlite3
 import random
+from pathlib import Path
 from datetime import datetime, timedelta
 
 random.seed(7)
 HOJE = datetime(2026, 9, 14, 9, 0, 0)
-DB_PATH = "/home/claude/njila-project/backend/njila.db"
+DB_PATH = Path(__file__).resolve().parent / "njila.db"
 
 # ---------------------------------------------------------------
 # 1. Dados fictícios de apoio

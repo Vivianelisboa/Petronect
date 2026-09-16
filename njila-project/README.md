@@ -34,10 +34,12 @@ njila-project/
 ### 1. Backend
 ```bash
 cd backend
+npm run seed
 node server.js
 ```
-Sobe em `http://localhost:3000`. Não precisa `npm install` pra isso — usa
-só o Node.js nativo (v20+).
+O comando `npm run seed` cria o banco SQLite mockado com empresas e eventos
+de demonstração. Ele precisa de Python 3. Depois, o servidor sobe em
+`http://localhost:3000` usando apenas o Node.js nativo (v20+).
 
 ### 2. Frontend
 Em **outro terminal** (deixem o backend rodando no primeiro):
