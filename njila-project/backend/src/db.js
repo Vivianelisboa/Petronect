@@ -6,6 +6,7 @@
  */
 const { DatabaseSync } = require("node:sqlite");
 const path = require("path");
+const { PRIORIDADES, classificarPerfil, gerarMensagemReengajamento } = require("./relatorio");
 
 const DB_PATH = process.env.NJILA_DB_PATH || path.join(__dirname, "..", "njila.db");
 
@@ -177,6 +178,47 @@ function getEmpresa(empresaId) {
     historico_acoes,
     paginas_acessadas,
     oportunidades_visualizadas,
+    engajamento: getEngajamento(conn, empresaId, classificacao),
+  };
+}
+
+/**
+ * Perfil de engajamento do fornecedor (radar Pulso) calculado para a ficha:
+ * recência e frequência de acesso + mensagem personalizada de reengajamento.
+ * A janela de referência segue o padrão do restante do backend (ancorada no
+ * último dia com evento do banco).
+ */
+function getEngajamento(conn, empresaId, classificacao) {
+  const referencia = conn
+    .prepare("SELECT COALESCE(MAX(date(timestamp)), date('now')) AS d FROM eventos")
+    .get().d;
+  const inicio7d = conn.prepare("SELECT date(?, '-7 days') AS d").get(referencia).d;
+  const refMs = Date.parse(`${referencia}T00:00:00`);
+
+  const frequenciaSemanal = conn
+    .prepare(
+      `SELECT COUNT(*) AS n FROM eventos
+        WHERE empresa_id = ? AND date(timestamp) >= ?`
+    )
+    .get(empresaId, inicio7d).n;
+
+  const ultimoMs = classificacao?.ultimo_acesso
+    ? Date.parse(classificacao.ultimo_acesso.replace(" ", "T"))
+    : null;
+  const diasSemAcesso = ultimoMs
+    ? Math.max(0, Math.round((refMs - ultimoMs) / (24 * 60 * 60 * 1000)))
+    : Number(classificacao?.dias_parado) || 0;
+
+  const perfil = classificarPerfil({ diasSemAcesso, frequenciaSemanal });
+  const nomeEmpresa = conn
+    .prepare("SELECT nome_empresa FROM empresas WHERE empresa_id = ?")
+    .get(empresaId).nome_empresa;
+
+  return {
+    perfil,
+    dias_sem_acesso: diasSemAcesso,
+    frequencia_semanal: frequenciaSemanal,
+    mensagem: gerarMensagemReengajamento({ nome: nomeEmpresa, perfil, diasSemAcesso }),
   };
 }
 
@@ -301,6 +343,74 @@ function getIndicadores({ periodo } = {}) {
   return { periodo: dias, inicio, referencia, kpis, serie, areas, momentos, recentes };
 }
 
+/**
+ * Relatório de reengajamento (radar Pulso). Classifica cada fornecedor por
+ * perfil de engajamento a partir da recência e da frequência de acesso,
+ * gera a mensagem personalizada e devolve a lista priorizada para o time
+ * de Marketing. A janela de "hoje" é ancorada no último dia com evento do
+ * banco (mesmo padrão do getIndicadores), para o demo não zerar por causa
+ * de datas antigas no seed.
+ */
+function getRelatorioReengajamento() {
+  const conn = getDb();
+
+  const referencia = conn
+    .prepare("SELECT COALESCE(MAX(date(timestamp)), date('now')) AS d FROM eventos")
+    .get().d;
+  const inicio7d = conn.prepare("SELECT date(?, '-7 days') AS d").get(referencia).d;
+  const refMs = Date.parse(`${referencia}T00:00:00`);
+
+  const empresas = conn
+    .prepare(
+      `SELECT e.empresa_id, e.nome_empresa, e.segmento, c.ultimo_acesso, c.dias_parado,
+              (SELECT COUNT(*) FROM eventos ev
+                WHERE ev.empresa_id = e.empresa_id AND date(ev.timestamp) >= ?) AS acessos_7d
+       FROM empresas e
+       LEFT JOIN classificacao c ON c.empresa_id = e.empresa_id
+       ORDER BY e.nome_empresa`
+    )
+    .all(inicio7d);
+
+  const relatorio = empresas.map((linha) => {
+    const ultimoMs = linha.ultimo_acesso ? Date.parse(linha.ultimo_acesso.replace(" ", "T")) : null;
+    const diasSemAcesso = ultimoMs
+      ? Math.max(0, Math.round((refMs - ultimoMs) / (24 * 60 * 60 * 1000)))
+      : Number(linha.dias_parado) || 0;
+
+    const perfil = classificarPerfil({
+      diasSemAcesso,
+      frequenciaSemanal: Number(linha.acessos_7d) || 0,
+    });
+
+    return {
+      empresa_id: linha.empresa_id,
+      empresa: linha.nome_empresa,
+      segmento: linha.segmento,
+      perfil,
+      prioridade: PRIORIDADES[perfil],
+      dias_sem_acesso: diasSemAcesso,
+      frequencia_semanal: Number(linha.acessos_7d) || 0,
+      mensagem_reengajamento: gerarMensagemReengajamento({
+        nome: linha.nome_empresa,
+        perfil,
+        diasSemAcesso,
+      }),
+    };
+  });
+
+  relatorio.sort((a, b) => a.prioridade - b.prioridade || a.empresa.localeCompare(b.empresa));
+
+  const distribuicao = { Ativo: 0, Novo: 0, "Em Risco": 0, Inativo: 0 };
+  for (const item of relatorio) distribuicao[item.perfil] += 1;
+
+  return {
+    gerado_em: referencia,
+    total: relatorio.length,
+    distribuicao,
+    relatorio,
+  };
+}
+
 module.exports = {
   getFilaHoje,
   getEmpresa,
@@ -309,4 +419,5 @@ module.exports = {
   getEmpresaComClassificacao,
   registrarEventoAcesso,
   getIndicadores,
+  getRelatorioReengajamento,
 };

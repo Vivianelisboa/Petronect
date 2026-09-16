@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AlertTriangle, ArrowLeft, Info, MoreHorizontal, UserX } from "lucide-react";
+import { AlertTriangle, ArrowLeft, HeartPulse, Info, MoreHorizontal, UserX } from "lucide-react";
 import { useEmpresa } from "../../hooks/useEmpresa";
 import { registrarAcao } from "../../services/endpoints";
 import { ACOES, ACOES_FICHA, CANAL_PADRAO, acaoPrimaria } from "../../domain/acoes";
@@ -165,6 +165,44 @@ export function FichaEmpresaPage() {
         <Fato rotulo={t("ficha.fatos.cadastro")} valor={empresa.data_cadastro_portal} />
       </div>
 
+      {/* Engajamento do fornecedor */}
+      {empresa.engajamento && (
+        <Card className="mt-6">
+          <CardHeader className="flex flex-wrap items-center gap-3">
+            <span className="flex items-center gap-2">
+              <HeartPulse size={15} className="text-brand-600" />
+              {t("ficha.engajamento_titulo")}
+            </span>
+            <Badge variant={VARIANTE_PERFIL[empresa.engajamento.perfil]}>
+              {t(`ficha.engajamento_perfis.${empresa.engajamento.perfil}`)}
+            </Badge>
+          </CardHeader>
+          <CardBody>
+            <p className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs tabular-nums text-ink-500">
+              <span>{t("ficha.engajamento_dias", { dias: empresa.engajamento.dias_sem_acesso })}</span>
+              <span>
+                {t("ficha.engajamento_freq", { freq: empresa.engajamento.frequencia_semanal })}
+              </span>
+            </p>
+            <p className="mt-3 rounded-lg bg-surface-50 px-3 py-2 text-sm leading-6 text-ink-600">
+              {empresa.engajamento.mensagem}
+            </p>
+            <div className="mt-3 flex justify-end">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() =>
+                  setComposer({ tipoAcao: "enviar_mensagem", texto: empresa.engajamento.mensagem })
+                }
+              >
+                <HeartPulse size={14} />
+                {t("ficha.engajamento_botao")}
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
+      )}
+
       {/* Próximo passo */}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-brand-50 p-4 ring-1 ring-brand-100">
         <div className="min-w-0">
@@ -250,6 +288,13 @@ export function FichaEmpresaPage() {
     </section>
   );
 }
+
+const VARIANTE_PERFIL = {
+  Inativo: "danger",
+  "Em Risco": "warning",
+  Novo: "info",
+  Ativo: "success",
+};
 
 function Fato({ rotulo, valor }) {
   return (
