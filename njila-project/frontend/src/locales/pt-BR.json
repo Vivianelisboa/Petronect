@@ -277,10 +277,138 @@
       }
     },
     "servicos": {
-      "cotacoes": { "titulo": "Cotações eletrônicas", "texto": "Encontre oportunidades e envie propostas." },
-      "cadastro": { "titulo": "Cadastro da empresa", "texto": "Mantenha seus dados sempre atualizados." },
-      "contratos": { "titulo": "Contratos e pedidos", "texto": "Acompanhe cada etapa com clareza." },
-      "pagamentos": { "titulo": "Pagamentos", "texto": "Consulte títulos e comprovantes em um lugar." }
+      "oportunidades": { "titulo": "Oportunidades", "texto": "Consulte processos de bens e serviços." },
+      "cadastro": { "titulo": "Cadastro", "texto": "Dados da empresa e informações para avaliação." },
+      "propostas": { "titulo": "Propostas", "texto": "Preços, documentos e acompanhamento." },
+      "documentos": { "titulo": "Documentos e orientações", "texto": "Guias para avançar com segurança." }
+    },
+    "header": {
+      "oportunidades": "Oportunidades",
+      "servicos": "Serviços",
+      "ajuda": "Ajuda",
+      "trocar_perfil": "Trocar perfil",
+      "notificacoes": "Notificações",
+      "notif_nenhuma": "Você não possui novas notificações.",
+      "menu": "Abrir menu"
+    },
+    "onboarding": {
+      "label": "Experiência personalizada",
+      "titulo": "Como você usa o portal?",
+      "subtitulo": "Escolha um perfil para adaptar os próximos passos e a ajuda da Paola. Você pode trocar depois.",
+      "recomendado": "Recomendado",
+      "pular": "Continuar sem personalizar",
+      "fechar": "Fechar",
+      "perfis": {
+        "fornecedor": "Quero participar de processos e enviar propostas.",
+        "cliente": "Quero acompanhar pedidos e contratos.",
+        "novo": "Quero explorar o portal primeiro."
+      }
+    },
+    "hero": {
+      "fornecedor": "Olá, Marina. Temos uma oportunidade para você.",
+      "cliente": "Sua operação, sempre à vista.",
+      "novo": "Conecte sua empresa a novas oportunidades.",
+      "subtitulo_fornecedor": "Uma jornada digital para encontrar processos, organizar informações e avançar com segurança.",
+      "subtitulo_cliente": "Consulte pedidos, contratos e pagamentos em um só lugar.",
+      "subtitulo_novo": "Explore o portal sem compromisso e crie seu cadastro quando estiver pronto.",
+      "acao_fornecedor": "Buscar oportunidades",
+      "acao_cliente": "Acompanhar pedidos",
+      "acao_novo": "Criar cadastro gratuito"
+    },
+    "acesso_rapido": {
+      "label": "Acesso rápido",
+      "titulo": "Encontre o que precisa",
+      "oportunidades": "Oportunidades abertas",
+      "cadastro": "Cadastro da empresa",
+      "documentos": "Documentos e orientações"
+    },
+    "perfil_empresa": {
+      "label": "Perfil da empresa",
+      "nome": "Atlântico Válvulas Ltda.",
+      "cadastrado": "Fornecedor cadastrado · Perfil 92% completo",
+      "verificado": "Cadastro verificado",
+      "mercado": "Anos de mercado",
+      "mercado_valor": "18 anos",
+      "colaboradores": "Colaboradores",
+      "colaboradores_valor": "248 pessoas",
+      "localizacao": "Localização",
+      "localizacao_valor": "Macaé · RJ",
+      "aderencia": "Aderência",
+      "aderencia_valor": "92%",
+      "cotacao_titulo": "Cotação em andamento",
+      "cotacao_texto": "Válvulas industriais · última atividade há 2 dias"
+    },
+    "cliente_area": {
+      "label": "Área do cliente",
+      "titulo": "Encontre soluções para seus processos.",
+      "texto": "Consulte fornecedores, organize demandas e acompanhe interações em um só lugar.",
+      "acao": "Consultar oportunidades"
+    },
+    "novo_area": {
+      "label": "Navegue sem compromisso",
+      "titulo": "Você pode explorar tudo sem cadastro.",
+      "texto": "Quando estiver pronto, o cadastro libera acompanhamento de propostas, alertas de prazo e recomendações personalizadas da Paola.",
+      "acao": "Criar cadastro gratuito"
+    },
+    "avisos": {
+      "label": "Avisos e novidades",
+      "titulo": "Informação para apoiar sua decisão",
+      "destaque": "Em destaque",
+      "destaque_titulo": "Organize sua participação com mais clareza",
+      "destaque_texto": "Acompanhe oportunidades, pendências e próximos passos em uma experiência mais simples.",
+      "destaque_acao": "Ver oportunidades"
+    },
+    "ajuda": {
+      "titulo": "Dúvidas durante sua jornada?",
+      "texto": "A Paola usa o contexto do Njila para oferecer o próximo passo, explicar pendências e encaminhar você ao Atendimento.",
+      "acao": "Conversar com a Paola"
+    },
+    "paola": {
+      "nome": "Paola",
+      "papel": "Assistente do Portal Petronect",
+      "botao": "Falar com a Paola",
+      "sugestao": "A Paola tem uma sugestão para você",
+      "placeholder": "Escreva sua mensagem",
+      "enviar": "Enviar mensagem",
+      "fechar": "Fechar conversa",
+      "pensando": "Paola está preparando uma orientação…",
+      "modo_demo": "Modo demonstrativo: o serviço da Paola não está conectado.",
+      "resp_continuar": "Perfeito. Vou abrir a cotação e destacar as pendências para você continuar.",
+      "resp_pendencias": "Encontrei uma pendência na documentação da cotação. Veja os itens que precisam de atenção.",
+      "resp_atendimento": "O histórico da sua jornada está pronto. Confirme seu melhor contato na próxima etapa para continuarmos.",
+      "resp_dispensado": "Tudo bem. A Paola continuará disponível quando você precisar.",
+      "divisor_atendimento": "Contexto preparado para o Atendimento",
+      "atendimento_toast": "Atendimento preparado com o contexto da sua jornada."
+    },
+    "tarefas": {
+      "fechar": "Fechar",
+      "cadastro": {
+        "label": "Cadastro de fornecedor",
+        "titulo": "Crie sua conta gratuita",
+        "titulo_ok": "Cadastro iniciado",
+        "ok": "Seu cadastro foi registrado para demonstração. A Paola ficará disponível para ajudar nos próximos passos.",
+        "razao": "Razão social",
+        "razao_ph": "Nome da empresa",
+        "cnpj": "CNPJ",
+        "cnpj_ph": "00.000.000/0001-00",
+        "email": "E-mail profissional",
+        "email_ph": "voce@empresa.com",
+        "acao": "Iniciar cadastro",
+        "toast": "Cadastro iniciado com sucesso. Confira seu e-mail para continuar."
+      },
+      "oportunidades": {
+        "label": "Oportunidades abertas",
+        "titulo": "Processos que podem interessar",
+        "item1": "Válvulas industriais · prazo em 4 dias",
+        "item2": "Serviços de manutenção offshore · prazo em 8 dias",
+        "item3": "Componentes elétricos · prazo em 11 dias"
+      },
+      "documentos": {
+        "label": "Próximo passo",
+        "titulo": "Pendências para avançar",
+        "texto": "A Paola identificou documentos e informações que podem ajudar a concluir a cotação. Consulte os requisitos da oportunidade ou fale com o Atendimento.",
+        "acao": "Ver oportunidade"
+      }
     }
   }
 }
