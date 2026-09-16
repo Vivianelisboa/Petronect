@@ -148,6 +148,16 @@
     "acoes": "Ações",
     "porque": "Por que esta prioridade",
     "nao_informado": "Não informado",
+    "engajamento_titulo": "Engajamento do fornecedor",
+    "engajamento_botao": "Usar mensagem de reengajamento",
+    "engajamento_dias": "{{dias}} dias sem acesso",
+    "engajamento_freq": "{{freq}} acessos nos últimos 7 dias",
+    "engajamento_perfis": {
+      "Ativo": "Ativo",
+      "Novo": "Novo",
+      "Em Risco": "Em Risco",
+      "Inativo": "Inativo"
+    },
     "fatos": {
       "ultimo_acesso": "Último acesso",
       "dias_parado": "Tempo parado",

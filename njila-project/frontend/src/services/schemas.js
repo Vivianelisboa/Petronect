@@ -65,6 +65,12 @@ export const EmpresaSchema = z.object({
   ),
   paginas_acessadas: z.array(z.string()),
   oportunidades_visualizadas: z.array(z.string()),
+  engajamento: z.object({
+    perfil: z.enum(["Ativo", "Novo", "Em Risco", "Inativo"]),
+    dias_sem_acesso: z.number(),
+    frequencia_semanal: z.number(),
+    mensagem: z.string(),
+  }),
 });
 
 export const AssistenteSchema = z.object({

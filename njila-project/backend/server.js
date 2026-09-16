@@ -14,6 +14,7 @@ const assistente = require("./handlers/assistente");
 const chat = require("./handlers/chat");
 const eventos = require("./handlers/eventos");
 const indicadores = require("./handlers/indicadores");
+const relatorioReengajamento = require("./handlers/relatorioReengajamento");
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +22,7 @@ function matchRota(method, pathname) {
   if (method === "GET" && pathname === "/fila-hoje") return { handler: filaHoje.handler, pathParameters: {} };
   if (method === "GET" && pathname === "/resumo") return { handler: resumo.handler, pathParameters: {} };
   if (method === "GET" && pathname === "/indicadores") return { handler: indicadores.handler, pathParameters: {} };
+  if (method === "GET" && pathname === "/relatorio-reengajamento") return { handler: relatorioReengajamento.handler, pathParameters: {} };
   if (method === "POST" && pathname === "/chat") return { handler: chat.handler, pathParameters: {} };
   if (method === "POST" && pathname === "/eventos") return { handler: eventos.handler, pathParameters: {} };
 
@@ -76,6 +78,8 @@ server.listen(PORT, () => {
   console.log("  GET  /fila-hoje");
   console.log("  GET  /fila-hoje?momento=oportunidade_quente&limit=10");
   console.log("  GET  /resumo");
+  console.log("  GET  /indicadores                      <- visão analítica");
+  console.log("  GET  /relatorio-reengajamento          <- radar de reengajamento (JSON/CSV)");
   console.log("  GET  /empresa/:empresaId");
   console.log("  GET  /empresa/:empresaId/assistente   <- chatbot proativo");
   console.log("  POST /chat                             <- chatbot conversa livre");
