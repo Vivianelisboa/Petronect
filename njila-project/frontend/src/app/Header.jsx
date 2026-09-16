@@ -34,13 +34,13 @@ export function Header() {
         escuro ? "border-white/10 bg-portal-950/70 backdrop-blur-xl" : "border-ink-200 bg-white"
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
-        <div className="flex min-w-0 shrink items-center gap-6">
-          <div className="flex shrink-0 items-center gap-3" aria-label="portal njila">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4 lg:px-8">
+        <div className="flex min-w-0 shrink items-center gap-2 sm:gap-6">
+          <div className="flex min-w-0 shrink items-center gap-2 sm:gap-3" aria-label="portal njila">
             <NjilaMark escuro={escuro} />
             <span
               className={cn(
-                "font-display whitespace-nowrap text-2xl font-normal tracking-[-0.03em]",
+                "font-display whitespace-nowrap text-lg font-normal tracking-[-0.03em] sm:text-2xl",
                 escuro ? "text-white" : "text-ink-900"
               )}
             >
@@ -88,7 +88,7 @@ export function Header() {
             type="button"
             aria-label={t("perfil.notificacoes")}
             className={cn(
-              "relative flex h-9 w-9 items-center justify-center rounded-lg transition-colors",
+              "relative hidden h-9 w-9 items-center justify-center rounded-lg transition-colors sm:flex",
               escuro
                 ? "text-white/70 hover:bg-white/10 hover:text-white"
                 : "text-ink-500 hover:bg-ink-50 hover:text-ink-800"
@@ -171,7 +171,7 @@ export function Header() {
 
       {menuAberto && (
         <nav
-          className={cn("border-t px-6 py-2 xl:hidden", escuro ? "border-white/10" : "border-ink-100")}
+          className={cn("border-t px-4 py-2 sm:px-6 xl:hidden", escuro ? "border-white/10" : "border-ink-100")}
           aria-label={t("nav.menu")}
         >
           <HeaderLink to="/" end icon={ListTodo} label={t("nav.fila")} escuro={escuro} onNavigate={() => setMenuAberto(false)} />
@@ -205,14 +205,14 @@ function NjilaMark({ escuro = false }) {
   return (
     <span
       className={cn(
-        "flex h-10 w-10 items-center justify-center rounded-xl shadow-sm",
+        "flex h-8 w-8 items-center justify-center rounded-lg shadow-sm sm:h-10 sm:w-10 sm:rounded-xl",
         escuro ? "bg-portal-lime" : "bg-brand-600 shadow-brand-600/20"
       )}
     >
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
-        className={cn("h-6 w-6", escuro ? "text-portal-950" : "text-white")}
+         className={cn("h-5 w-5 sm:h-6 sm:w-6", escuro ? "text-portal-950" : "text-white")}
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"

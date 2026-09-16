@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Headset, HelpCircle, SendHorizontal } from "lucide-react";
 import { Badge } from "../../design/ui/Badge";
@@ -48,7 +49,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
 
   return (
     <Card className="overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-ink-100 px-5 py-4">
+      <div className="flex flex-wrap items-center gap-3 border-b border-ink-100 px-4 py-4 sm:flex-nowrap sm:px-5">
         <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-brand-700">
           <Headset size={16} />
           <span
@@ -65,13 +66,13 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
           </p>
         </div>
         {momentoInfo?.i18nKey && (
-          <Badge variant={momentoInfo.variante} className="ml-auto">
+          <Badge variant={momentoInfo.variante} className="ml-0 sm:ml-auto">
             {t(momentoInfo.i18nKey)}
           </Badge>
         )}
       </div>
 
-      <div className="max-h-80 space-y-3 overflow-y-auto p-5">
+      <div className="max-h-80 space-y-3 overflow-y-auto p-4 sm:p-5">
         {mensagens.map((mensagem, indice) => {
           if (mensagem.autor === "sistema") {
             return (
@@ -84,7 +85,7 @@ export function PaolaWidget({ empresaId, momento, assistente, onAcao }) {
           return (
             <div key={indice} className={meu ? "flex flex-col items-end" : "flex flex-col items-start"}>
               <div
-                className={`max-w-[85%] rounded-xl px-4 py-2.5 text-sm ${
+                className={`max-w-[92%] rounded-xl px-4 py-2.5 text-sm sm:max-w-[85%] ${
                   meu ? "bg-brand-700 text-white" : "bg-surface-100 text-ink-800"
                 }`}
               >

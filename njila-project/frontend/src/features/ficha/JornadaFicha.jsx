@@ -28,7 +28,7 @@ export function JornadaFicha({ momento }) {
   const atual = indiceEtapa(etapaId);
 
   return (
-    <ol className="flex min-w-[560px]">
+    <ol className="grid grid-cols-3 gap-x-2 gap-y-4 sm:flex sm:min-w-[560px]">
       {ETAPAS.map((etapa, indice) => {
         const Icone = ICONES[etapa.id];
         const passou = indice < atual;
@@ -36,16 +36,16 @@ export function JornadaFicha({ momento }) {
         const primeira = indice === 0;
         const ultima = indice === ETAPAS.length - 1;
 
-        return (
-          <li key={etapa.id} className="flex flex-1 flex-col items-center">
-            <div className="flex h-11 w-full items-center">
-              <span
-                className={cn(
-                  "h-[3px] flex-1 rounded-full",
+         return (
+           <li key={etapa.id} className="flex flex-col items-center sm:flex-1">
+             <div className="flex h-11 w-full items-center justify-center sm:justify-normal">
+               <span
+                 className={cn(
+                   "hidden h-[3px] flex-1 rounded-full sm:block",
                   primeira ? "bg-transparent" : indice <= atual ? "bg-brand-400" : "bg-ink-100"
                 )}
               />
-              <span
+               <span
                 className={cn(
                   "flex shrink-0 items-center justify-center rounded-full transition-all",
                   agora
@@ -57,16 +57,16 @@ export function JornadaFicha({ momento }) {
               >
                 <Icone size={agora ? 18 : 15} strokeWidth={2.3} />
               </span>
-              <span
-                className={cn(
-                  "h-[3px] flex-1 rounded-full",
+               <span
+                 className={cn(
+                   "hidden h-[3px] flex-1 rounded-full sm:block",
                   ultima ? "bg-transparent" : indice < atual ? "bg-brand-400" : "bg-ink-100"
                 )}
               />
             </div>
-            <span
-              className={cn(
-                "mt-2 text-center text-[11px] leading-tight",
+             <span
+               className={cn(
+                 "mt-2 max-w-[92px] text-center text-[11px] leading-tight",
                 agora ? "font-bold text-brand-700" : "font-medium text-ink-500"
               )}
             >

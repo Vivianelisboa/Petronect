@@ -117,7 +117,7 @@ export function FichaEmpresaPage() {
         {t("ficha.voltar")}
       </Link>
 
-      <header className="flex items-start justify-between gap-4">
+       <header className="flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
         <div className="min-w-0">
           <h1 className="font-display truncate text-3xl font-normal tracking-[-0.035em] text-ink-900">
             {empresa.nome_empresa}
@@ -145,14 +145,14 @@ export function FichaEmpresaPage() {
       {classificacao && (
         <Card className="mt-6">
           <CardHeader>{t("ficha.jornada")}</CardHeader>
-          <CardBody className="overflow-x-auto">
+           <CardBody className="overflow-visible sm:overflow-x-auto">
             <JornadaFicha momento={classificacao.momento} />
           </CardBody>
         </Card>
       )}
 
       {/* Faixa de fatos */}
-      <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+       <div className="mt-4 grid gap-3 min-[420px]:grid-cols-2 lg:grid-cols-4">
         <Fato rotulo={t("ficha.fatos.ultimo_acesso")} valor={classificacao?.ultimo_acesso || "—"} />
         <Fato
           rotulo={t("ficha.fatos.dias_parado")}
@@ -176,7 +176,7 @@ export function FichaEmpresaPage() {
           </p>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5">
+         <div className="flex w-full flex-wrap justify-end gap-1.5 sm:w-auto">
           {primaria && (
             <Button disabled={Boolean(emAndamento)} size="sm" onClick={() => aoEscolherAcao(primaria)}>
               {emAndamento === primaria ? t("comum.registrando") : t(ACOES[primaria])}
@@ -275,7 +275,7 @@ function ConfirmarResolucao({ onCancelar, onConfirmar, processando }) {
         role="alertdialog"
         aria-modal="true"
         aria-labelledby="confirmar-resolucao"
-        className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl"
+         className="w-full max-w-sm rounded-2xl bg-white p-4 shadow-2xl sm:p-6"
       >
         <h2 id="confirmar-resolucao" className="text-base font-bold text-ink-900">
           {t("ficha.confirmar_titulo")}

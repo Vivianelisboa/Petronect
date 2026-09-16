@@ -48,7 +48,7 @@ export function ComposerMensagem({ empresa, tipoAcao, textoInicial, onCancelar, 
         role="dialog"
         aria-modal="true"
         aria-labelledby="composer-titulo"
-        className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl"
+         className="w-full max-w-lg rounded-2xl bg-white p-4 shadow-2xl sm:p-6"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -112,9 +112,9 @@ export function ComposerMensagem({ empresa, tipoAcao, textoInicial, onCancelar, 
           />
         </label>
 
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+         <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-xs text-ink-400">{t("ficha.envio_aviso")}</span>
-          <div className="flex gap-2">
+           <div className="flex justify-end gap-2">
             <Button variant="ghost" size="sm" onClick={onCancelar}>
               {t("ficha.cancelar")}
             </Button>

@@ -23,6 +23,11 @@ body {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 /* Garet é reservada para a marca e títulos de destaque */
 .font-display {
   font-family: "Garet", "Inter", system-ui, sans-serif;

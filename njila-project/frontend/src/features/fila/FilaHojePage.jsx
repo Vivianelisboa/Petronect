@@ -139,7 +139,7 @@ export function FilaHojePage() {
 
   return (
     <section className="space-y-6">
-      <header className="flex flex-wrap items-end justify-between gap-5">
+       <header className="flex flex-wrap items-start justify-between gap-4 sm:items-end sm:gap-5">
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-brand-700">Central de Operações</p>
           <h1 className="font-display mt-2 text-3xl font-normal tracking-[-0.035em] text-ink-900">
@@ -147,13 +147,13 @@ export function FilaHojePage() {
           </h1>
           <p className="mt-1 text-sm text-ink-500">{t("central.descricao")}</p>
         </div>
-        <label className="flex items-center gap-3 text-right">
+         <label className="flex w-full items-center justify-between gap-3 text-left sm:w-auto sm:justify-start sm:text-right">
             <span className="text-[10px] font-bold uppercase tracking-wider text-ink-400">{t("central.data")}</span>
             <input
               type="date"
               value={dataReferencia}
               onChange={(e) => setDataReferencia(e.target.value)}
-              className="h-10 rounded-lg border border-ink-200 bg-white px-3 text-sm font-medium text-ink-700 shadow-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+               className="h-10 min-w-0 rounded-lg border border-ink-200 bg-white px-3 text-sm font-medium text-ink-700 shadow-sm outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
             />
         </label>
       </header>
@@ -243,7 +243,7 @@ export function FilaHojePage() {
           />
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
+         <div className="grid min-w-0 gap-4 md:grid-cols-2">
           {filtrada.map((item) => (
             <CardCaso
               key={item.empresa_id}

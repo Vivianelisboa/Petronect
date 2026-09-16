@@ -14,7 +14,7 @@ export function AppShell() {
   return (
     <div className={cn("min-h-screen", escuro ? "portal-shell text-white" : "bg-surface-50")}>
       <Header />
-      <main className="mx-auto max-w-6xl px-6 py-8">
+      <main className="mx-auto max-w-6xl px-4 py-5 sm:px-6 sm:py-8">
         <Outlet />
       </main>
     </div>

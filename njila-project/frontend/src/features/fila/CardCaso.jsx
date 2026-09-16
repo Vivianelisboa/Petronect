@@ -85,13 +85,13 @@ export function CardCaso({ item, saindo = false, acaoEmAndamento = false, onVerF
         <span className="text-[11px] text-ink-400">{item.dias_parado}d sem retorno</span>
       </div>
 
-      <div className="mt-auto flex items-center justify-between gap-3 border-t border-ink-100 pt-4">
+       <div className="mt-auto flex flex-col items-stretch gap-3 border-t border-ink-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="min-w-0 truncate text-xs text-ink-500">
           <span className="text-ink-400">Próximo: </span>
           <span className="font-semibold text-ink-700">{item.acao_recomendada}</span>
         </p>
 
-        <div className="flex shrink-0 items-center gap-1.5">
+         <div className="flex flex-wrap justify-end gap-1.5">
           {primaria && (
             <Button disabled={acaoEmAndamento} size="sm" onClick={() => onAcao(item.empresa_id, primaria, item.nome_empresa)}>
               {acaoEmAndamento ? t("comum.registrando") : t(ACOES[primaria])}
@@ -182,7 +182,7 @@ function EmpresaPreview({ item, momento, situacao, primaria, onClose, onVerFicha
         role="dialog"
         aria-modal="true"
         aria-labelledby={`empresa-preview-${item.empresa_id}`}
-        className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl"
+         className="w-full max-w-lg rounded-2xl bg-white p-4 shadow-2xl sm:p-6"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -203,7 +203,7 @@ function EmpresaPreview({ item, momento, situacao, primaria, onClose, onVerFicha
           </button>
         </div>
 
-        <div className="mt-5 flex items-center justify-between rounded-xl bg-surface-50 p-4">
+         <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-surface-50 p-4">
           <div className="flex flex-wrap gap-2">
             <Badge variant={momento.variante}>{t(momento.i18nKey)}</Badge>
             <Badge variant={situacao.variante}>{t(situacao.i18nKey)}</Badge>
@@ -218,7 +218,7 @@ function EmpresaPreview({ item, momento, situacao, primaria, onClose, onVerFicha
           </p>
         )}
 
-        <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+         <div className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
           <div className="rounded-lg bg-surface-50 p-3">
             <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-400">Último acesso</span>
             <span className="mt-1 block font-semibold text-ink-800">{item.ultimo_acesso}</span>

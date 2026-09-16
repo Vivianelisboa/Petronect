@@ -36,7 +36,7 @@ export function ResumoFila({ contagens, total, ativo, onSelecionar }) {
 
   return (
     <section className="rounded-2xl bg-white p-2 shadow-sm ring-1 ring-ink-100">
-      <div className="flex gap-1 overflow-x-auto">
+      <div className="grid grid-cols-2 gap-1 sm:flex sm:gap-1 sm:overflow-x-auto">
         {VISOES.map((visao) => {
           const Icone = visao.icon;
           const selecionada = ativo === visao.id;
@@ -48,7 +48,7 @@ export function ResumoFila({ contagens, total, ativo, onSelecionar }) {
               onClick={() => onSelecionar(visao.id)}
               aria-pressed={selecionada}
               className={cn(
-                "flex min-w-[104px] flex-1 items-center gap-2 rounded-xl px-3 py-3 text-left transition-all",
+                "flex min-w-0 items-center justify-center gap-2 rounded-xl px-2 py-3 text-center transition-all sm:min-w-[104px] sm:flex-1 sm:justify-start sm:px-3 sm:text-left",
                 selecionada ? "bg-brand-50 text-brand-900 ring-1 ring-brand-200" : "hover:bg-surface-50"
               )}
             >
