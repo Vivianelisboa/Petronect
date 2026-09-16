@@ -12,13 +12,17 @@ const registrarAcao = require("./handlers/registrarAcao");
 const resumo = require("./handlers/resumo");
 const assistente = require("./handlers/assistente");
 const chat = require("./handlers/chat");
+const eventos = require("./handlers/eventos");
+const indicadores = require("./handlers/indicadores");
 
 const PORT = process.env.PORT || 3000;
 
 function matchRota(method, pathname) {
   if (method === "GET" && pathname === "/fila-hoje") return { handler: filaHoje.handler, pathParameters: {} };
   if (method === "GET" && pathname === "/resumo") return { handler: resumo.handler, pathParameters: {} };
+  if (method === "GET" && pathname === "/indicadores") return { handler: indicadores.handler, pathParameters: {} };
   if (method === "POST" && pathname === "/chat") return { handler: chat.handler, pathParameters: {} };
+  if (method === "POST" && pathname === "/eventos") return { handler: eventos.handler, pathParameters: {} };
 
   let m = pathname.match(/^\/empresa\/([^/]+)$/);
   if (method === "GET" && m) return { handler: empresa.handler, pathParameters: { empresaId: m[1] } };

@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
+    "seed": "python gerar_banco.py",
     "deploy": "serverless deploy",
     "remove": "serverless remove"
   },

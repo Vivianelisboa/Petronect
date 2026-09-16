@@ -8,7 +8,7 @@ const { ok, erro } = require("./_response");
 exports.handler = async (event) => {
   try {
     const qs = event.queryStringParameters || {};
-    const fila = getFilaHoje({ momento: qs.momento, limit: qs.limit });
+    const fila = getFilaHoje({ momento: qs.momento, limit: qs.limit, data: qs.data });
     return ok({ total: fila.length, fila });
   } catch (err) {
     return erro(err);
